@@ -2,9 +2,9 @@
 
 Welcome to the first official release of **Dice Chaos Display** by **[Dice Chaos](https://dicechaos.com)**!
 
-**Dice Chaos Display** is an offline-first 4K/8K battlemap studio, true 1-inch physical miniature calibrator, and spoiler-safe **2nd-Screen Tabletop TV Display** built for Dungeon Masters, Game Masters, and in-person tabletop groups rolling real **[Dice Chaos](https://dicechaos.com)** polyhedral dice and moving physical miniatures on TV glass.
+**Dice Chaos Display** is an offline-first 4K/8K battlemap studio, true 1-inch physical miniature calibrator, and spoiler-safe **2nd-Screen Tabletop TV Display** built to pair seamlessly alongside **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)** and **[Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)** in the **Dice Chaos Tabletop Suite**—engineered for Dungeon Masters, Game Masters, and in-person tabletop groups rolling real **[Dice Chaos](https://dicechaos.com)** polyhedral dice and moving physical miniatures on TV glass.
 
-> **Companion App:** Pair **Dice Chaos Display** at the game table with **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)**—our offline TTRPG campaign mind-map, detective conspiracy board, and zero-spoiler 2nd-screen lore presenter!
+> **Part of the Dice Chaos Tabletop Suite:** Forge custom polyhedral dice masters & matched insert blanks in **[Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)**, map out your campaign's NPCs, factions, and conspiracy webs in **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)**, and run locked-60-FPS 4K/8K tactical encounters on your table TV in **Dice Chaos Display**!
 
 ---
 
@@ -37,5 +37,6 @@ Welcome to the first official release of **Dice Chaos Display** by **[Dice Chaos
 ### Feedback, Companion Tools & Handmade Dice
 Running **Dice Chaos Display** at your table? Let us know how it goes!
 - **Report bugs / request features:** [GitHub Issues](https://github.com/dicechaos/DiceChaosDisplay/issues)
-- **Companion mind-map & conspiracy studio:** [Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)
-- **Handcrafted dice & tabletop tools:** [dicechaos.com](https://dicechaos.com)
+- **Companion campaign mind-map studio:** [Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)
+- **Companion 3D dice master CAD studio:** [Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)
+- **Handmade dice & tabletop tools:** [dicechaos.com](https://dicechaos.com)
