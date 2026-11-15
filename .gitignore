@@ -1,0 +1,30 @@
+# Build & Publish Outputs
+[Bb]in/
+[Oo]bj/
+[Pp]ublish/
+[Rr]eleases/
+[Oo]ut/
+*.zip
+
+# Visual Studio / Rider / VS Code / Antigravity
+.vs/
+.idea/
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# .NET Test Results & Coverage
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+
+# OS & Temp Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.tmp
+*.bak

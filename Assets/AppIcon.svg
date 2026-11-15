@@ -1,0 +1,67 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="44%" r="60%">
+      <stop offset="0%" stop-color="#12203B"/>
+      <stop offset="58%" stop-color="#0A1121"/>
+      <stop offset="100%" stop-color="#070C18"/>
+    </radialGradient>
+    <linearGradient id="rimGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#36A2D8"/>
+      <stop offset="100%" stop-color="#288BBE"/>
+    </linearGradient>
+    <linearGradient id="holoCone" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#C084FC" stop-opacity="0.24"/>
+      <stop offset="60%" stop-color="#38BDF8" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Squircle Backdrop -->
+  <rect x="48" y="48" width="928" height="928" rx="215" fill="url(#bgGrad)" stroke="url(#rimGrad)" stroke-width="14"/>
+  <rect x="64" y="64" width="896" height="896" rx="200" fill="none" stroke="#18304E" stroke-width="3"/>
+
+  <!-- Isometric Tabletop Battlemap Screen -->
+  <polygon points="146,852 878,852 863,878 161,878" fill="#0D1E36" stroke="#36A2D8" stroke-width="7.8" stroke-linejoin="round"/>
+  <polygon points="246,636 778,636 878,852 146,852" fill="#0E2338" stroke="#38BDF8" stroke-width="10" stroke-linejoin="round" filter="url(#neonGlow)"/>
+  <g stroke="#38E08F" stroke-opacity="0.76" stroke-width="3.6">
+    <line x1="379" y1="636" x2="329" y2="852"/>
+    <line x1="512" y1="636" x2="512" y2="852"/>
+    <line x1="645" y1="636" x2="695" y2="852"/>
+    <line x1="216" y1="701" x2="808" y2="701"/>
+    <line x1="181" y1="775" x2="843" y2="775"/>
+  </g>
+  <line x1="464" y1="865" x2="560" y2="865" stroke="#38E08F" stroke-width="6.8" stroke-linecap="round" filter="url(#neonGlow)"/>
+
+  <!-- 3 Concentric Tactical Suite Rings -->
+  <ellipse cx="306" cy="774" rx="48" ry="22" fill="#060B15" stroke="#FF6E7F" stroke-width="9" filter="url(#neonGlow)"/>
+  <ellipse cx="306" cy="774" rx="10" ry="5" fill="#FF6E7F"/>
+  <ellipse cx="718" cy="774" rx="48" ry="22" fill="#060B15" stroke="#FBBF24" stroke-width="9" filter="url(#neonGlow)"/>
+  <ellipse cx="718" cy="774" rx="10" ry="5" fill="#FBBF24"/>
+  <ellipse cx="512" cy="724" rx="60" ry="27" fill="#060B15" stroke="#C084FC" stroke-width="9" filter="url(#neonGlow)"/>
+  <ellipse cx="512" cy="724" rx="12" ry="6" fill="#C084FC"/>
+
+  <!-- Holographic Projection -->
+  <polygon points="452,720 318,464 706,464 572,720" fill="url(#holoCone)"/>
+  <line x1="450" y1="714" x2="324" y2="472" stroke="#C084FC" stroke-width="7.8" stroke-linecap="round" stroke-dasharray="20 16" filter="url(#neonGlow)"/>
+  <line x1="574" y1="714" x2="700" y2="472" stroke="#38E08F" stroke-width="7.8" stroke-linecap="round" stroke-dasharray="20 16" filter="url(#neonGlow)"/>
+
+  <!-- Floating Multi-Neon Prism Icosahedron (d20) -->
+  <polygon points="512,128 706,240 706,464 512,576 318,464 318,240" fill="#112442"/>
+  <g stroke-width="12" stroke-linecap="round" filter="url(#neonGlow)">
+    <line x1="512" y1="128" x2="706" y2="240" stroke="#FF6E7F"/>
+    <line x1="706" y1="240" x2="706" y2="464" stroke="#FBBF24"/>
+    <line x1="706" y1="464" x2="512" y2="576" stroke="#38BDF8"/>
+    <line x1="512" y1="576" x2="318" y2="464" stroke="#38E08F"/>
+    <line x1="318" y1="464" x2="318" y2="240" stroke="#C084FC"/>
+    <line x1="318" y1="240" x2="512" y2="128" stroke="#38E08F"/>
+  </g>
+  <polygon points="512,220 626.5,418 397.5,418" fill="#1B3D68" fill-opacity="0.6" stroke="#F0FCFF" stroke-width="13.5" stroke-linejoin="round" filter="url(#neonGlow)"/>
+  <text x="512" y="373" text-anchor="middle" font-family="Segoe UI, sans-serif" font-weight="900" font-size="52" fill="#F0FCFF" filter="url(#neonGlow)">20</text>
+</svg>

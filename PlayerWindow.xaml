@@ -1,0 +1,87 @@
+<Window x:Class="DiceChaosDisplay.PlayerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:DiceChaosDisplay.Controls"
+        Title="DiceChaos TV Display"
+        Icon="pack://application:,,,/DiceChaosDisplay;component/Assets/AppIcon.ico"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Black"
+        Foreground="White"
+        ShowInTaskbar="False"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Grid Background="Black" ClipToBounds="True">
+        <!-- 1. GPU Matrix-Transformed Map, Video, Grid, Rings, & Solid Fog Viewport -->
+        <controls:MapViewportControl x:Name="TvViewport"
+                                     ViewModel="{Binding}"
+                                     IsDmView="False"/>
+
+        <!-- 2. Rotatable Overlay Container for Standby Splash, Handouts & Physical Ruler -->
+        <Grid IsHitTestVisible="False">
+            <Grid.LayoutTransform>
+                <RotateTransform Angle="{Binding TvProfile.RotationAngle}"/>
+            </Grid.LayoutTransform>
+
+            <!-- TV Blackout / Custom Campaign Standby Screen -->
+            <Grid Background="Black"
+                  Visibility="{Binding IsTvBlackedOut, Converter={StaticResource BoolToVis}}">
+                <Image Source="{Binding StandbyArtworkBitmap}"
+                       Stretch="Uniform"
+                       Visibility="{Binding HasStandbyArtwork, Converter={StaticResource BoolToVis}}"/>
+                <Border VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                        Margin="0,0,0,48" Padding="24,10" CornerRadius="10"
+                        Background="#CC10141F"
+                        Visibility="{Binding TvProfile.StandbyTitle, Converter={StaticResource NotNullVis}}">
+                    <TextBlock Text="{Binding TvProfile.StandbyTitle}"
+                               FontSize="32" FontWeight="Bold" Foreground="#F4D35E"/>
+                </Border>
+            </Grid>
+
+            <!-- TV Art Handout Popup Presenter (NPCs, Monsters, Items, Puzzles) -->
+            <Grid Background="#D8080A10"
+                  Visibility="{Binding IsHandoutVisible, Converter={StaticResource BoolToVis}}">
+                <Border Margin="48" Padding="14" CornerRadius="12"
+                        Background="#161A26" BorderBrush="#D4AF37" BorderThickness="2"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Source="{Binding ActiveHandoutBitmap}" Stretch="Uniform" MaxWidth="1600" MaxHeight="900"/>
+                        <TextBlock Grid.Row="1" Text="{Binding ActiveHandoutTitle}"
+                                   HorizontalAlignment="Center" Margin="0,12,0,2"
+                                   FontSize="22" FontWeight="SemiBold" Foreground="#F8FAFC"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Live On-TV 1-Inch Physical Miniature Calibration Overlay -->
+            <Grid Background="#AA000000"
+                  Visibility="{Binding IsTvCalibrationRulerVisible, Converter={StaticResource BoolToVis}}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="1-INCH PHYSICAL MINIATURE CALIBRATION"
+                               FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"
+                               Foreground="#00E5FF" Margin="0,0,0,18"/>
+                    <TextBlock Text="Place a standard 1-inch D&amp;D miniature base (or ruler) inside both shapes below:"
+                               FontSize="16" HorizontalAlignment="Center" Foreground="#CBD5E1" Margin="0,0,0,28"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <!-- 1-Inch Square Reference -->
+                        <Border Width="{Binding CalibrationRulerDips}"
+                                Height="{Binding CalibrationRulerDips}"
+                                BorderBrush="#00E5FF" BorderThickness="2.5"
+                                Background="#2600E5FF" Margin="0,0,36,0"/>
+
+                        <!-- 1-Inch Round Miniature Base Reference -->
+                        <Ellipse Width="{Binding CalibrationRulerDips}"
+                                 Height="{Binding CalibrationRulerDips}"
+                                 Stroke="#2ED573" StrokeThickness="2.5"
+                                 Fill="#262ED573"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

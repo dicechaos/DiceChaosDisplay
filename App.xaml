@@ -1,0 +1,21 @@
+﻿<Application x:Class="DiceChaosDisplay.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DiceChaosDisplay"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Icons.xaml"/>
+                <ResourceDictionary Source="Themes/DarkControls.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <local:InverseBoolConverter x:Key="InverseBool"/>
+            <local:EnumMatchToBoolConverter x:Key="EnumMatchBool"/>
+            <local:EnumMatchToVisibilityConverter x:Key="EnumMatchVis"/>
+            <local:NotNullToVisibilityConverter x:Key="NotNullVis"/>
+            <local:HexToSolidBrushConverter x:Key="HexToBrush"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

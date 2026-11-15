@@ -1,0 +1,1216 @@
+<Window x:Class="DiceChaosDisplay.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiceChaosDisplay"
+        xmlns:controls="clr-namespace:DiceChaosDisplay.Controls"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}"
+        Icon="pack://application:,,,/DiceChaosDisplay;component/Assets/AppIcon.ico"
+        Height="900" Width="1540" MinHeight="660" MinWidth="1120"
+        Background="{StaticResource BgCanvasBrush}"
+        AllowDrop="True"
+        Drop="Window_Drop"
+        DragOver="Window_DragOver"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Closing="Window_Closing">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44"/>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="26"/>
+        </Grid.RowDefinitions>
+
+        <!-- ==================== ROW 0: STUDIO MENU & LIVE TV BROADCAST BAR ==================== -->
+        <Border Grid.Row="0" Background="{StaticResource BgHeaderBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1" Padding="10,0">
+            <DockPanel LastChildFill="False">
+                <!-- Left: Brand + Native Dark Menu + Campaign Quick Controls -->
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#131D30" BorderBrush="#284369" BorderThickness="1" CornerRadius="6" Padding="6,3" Margin="0,0,8,0" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="pack://application:,,,/DiceChaosDisplay;component/Assets/AppIcon-256.png"
+                                   Width="24" Height="24"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   Margin="0,0,7,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="DICECHAOS" FontWeight="Black" FontSize="12.5" Foreground="#329CCF" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Structured Studio Menu Bar -->
+                    <Menu VerticalAlignment="Center" Margin="0,0,8,0">
+                        <MenuItem Header="_File">
+                            <MenuItem Header="New Campaign" InputGestureText="Ctrl+N" Click="NewCampaign_Click"/>
+                            <MenuItem Header="Open Campaign..." InputGestureText="Ctrl+O" Click="OpenCampaign_Click"/>
+                            <MenuItem x:Name="RecentCampaignsMenu" Header="Recent Campaigns" SubmenuOpened="RecentCampaignsMenu_SubmenuOpened">
+                                <MenuItem Header="(No recent campaigns)" IsEnabled="False"/>
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Save Campaign" InputGestureText="Ctrl+S" Click="SaveCampaign_Click"/>
+                            <MenuItem Header="Save Campaign As..." InputGestureText="Ctrl+Shift+S" Click="SaveCampaignAs_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Add Map / UVTT / Video..." InputGestureText="Ctrl+I" Click="AddScene_Click"/>
+                            <MenuItem Header="Add Handout Artwork..." Click="AddHandouts_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Exit DiceChaos" InputGestureText="Alt+F4" Click="ExitMenu_Click"/>
+                        </MenuItem>
+
+                        <MenuItem Header="_Edit">
+                            <MenuItem Header="Undo" InputGestureText="Ctrl+Z" IsEnabled="{Binding CanUndo}" Click="Undo_Click"/>
+                            <MenuItem Header="Redo" InputGestureText="Ctrl+Y" IsEnabled="{Binding CanRedo}" Click="Redo_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Reveal All Fog" Click="RevealAll_Click"/>
+                            <MenuItem Header="Reset / Hide All Fog" Click="HideAll_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Clear All Spell AoE Templates" Click="ClearAllAoes_Click"/>
+                            <MenuItem Header="Clear All Mini Rings &amp; Tokens" Click="ClearAllTokens_Click"/>
+                            <MenuItem Header="Clear Pencil Sketches" Click="ClearPencil_Click"/>
+                            <MenuItem Header="Clear All 1-Click Fog Rooms" Click="ClearAllRooms_Click"/>
+                            <MenuItem Header="Clear All Secret DM Pins" Click="ClearAllDmPins_Click"/>
+                        </MenuItem>
+
+                        <MenuItem Header="_View">
+                            <MenuItem Header="Focus Mode (Hide/Show Sidebars)" InputGestureText="Tab" Click="ToggleFocusMode_Click"/>
+                            <MenuItem Header="Show Right Inspector Dock" IsCheckable="True" IsChecked="{Binding IsRightInspectorExpanded}"/>
+                            <MenuItem Header="Show Bottom Scene Strip" IsCheckable="True" IsChecked="{Binding IsSceneStripExpanded}"/>
+                            <MenuItem Header="Fullscreen DM Studio" InputGestureText="F11" Click="ToggleDmFullscreen_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Fit Map to DM View" InputGestureText="F" Click="FitMap_Click"/>
+                            <MenuItem Header="Zoom 100% (1:1)" InputGestureText="Ctrl+0" Click="Zoom100_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Show Fog Preview on DM" IsCheckable="True" IsChecked="{Binding ShowFogOnDm}"/>
+                            <MenuItem Header="Show 1-Click Room Badges" IsCheckable="True" IsChecked="{Binding ShowDmRoomBadges}"/>
+                            <MenuItem Header="Show .uvtt Wall &amp; Door Guides" IsCheckable="True" IsChecked="{Binding ShowUvttWallGuides}"/>
+                            <MenuItem Header="Show Mini Rings &amp; Tokens" IsCheckable="True" IsChecked="{Binding ShowTokensLayer}"/>
+                            <MenuItem Header="Show Spell AoE Templates" IsCheckable="True" IsChecked="{Binding ShowAoeLayer}"/>
+                            <MenuItem Header="Always Show Spell AoE Labels" IsCheckable="True" IsChecked="{Binding ShowAoeLabelsAlways}"/>
+                            <MenuItem Header="Show Pencil Sketches" IsCheckable="True" IsChecked="{Binding ShowPencilLayer}"/>
+                            <MenuItem Header="Show Secret DM Pins" IsCheckable="True" IsChecked="{Binding ShowDmPinsLayer}"/>
+                            <MenuItem Header="Show Green TV Frame Guide" IsCheckable="True" IsChecked="{Binding ShowTvFrameGuide}"/>
+                        </MenuItem>
+
+                        <MenuItem Header="_Scenes">
+                            <MenuItem Header="Push Staged Scene to TV" InputGestureText="Ctrl+Enter" Click="PushToTv_Click"/>
+                            <MenuItem Header="Auto-Push When Clicking Scene" IsCheckable="True" IsChecked="{Binding AutoPushSceneOnSelect}"/>
+                            <Separator/>
+                            <MenuItem Header="Add Map / UVTT / Video..." InputGestureText="Ctrl+I" Click="AddScene_Click"/>
+                            <MenuItem Header="Duplicate Staged Scene" IsEnabled="{Binding HasStagedScene}" Click="DuplicateStagedScene_Click"/>
+                        </MenuItem>
+
+                        <MenuItem Header="_TV Display">
+                            <MenuItem InputGestureText="F12" Click="TogglePlayerWindow_Click">
+                                <MenuItem.Style>
+                                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                        <Setter Property="Header" Value="Turn Player TV Screen ON"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsPlayerWindowOpen}" Value="True">
+                                                <Setter Property="Header" Value="Turn Player TV Screen OFF"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </MenuItem.Style>
+                            </MenuItem>
+                            <MenuItem Header="Force Fullscreen When Sharing DM Display"
+                                      IsCheckable="True" IsChecked="{Binding ForceFullscreenOnSameMonitor}"
+                                      Click="ForceFullscreenSameMonitor_Click"/>
+                            <MenuItem Header="Blackout / Standby Splash" InputGestureText="B" IsCheckable="True" IsChecked="{Binding IsTvBlackedOut}"/>
+                            <MenuItem Header="Center TV View at Cursor" InputGestureText="C" Click="CenterTv_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Lock TV to 1-Inch Physical Mini Scale" Click="SetSyncOneInch_Click"/>
+                            <MenuItem Header="Mirror DM Pan &amp; Zoom" Click="SetSyncMirror_Click"/>
+                            <MenuItem Header="Independent TV Camera" Click="SetSyncIndependent_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Live On-TV 1-Inch Ruler Calibration" Click="OpenTvRulerCalibration_Click"/>
+                            <MenuItem Header="Flash Ad-Hoc Handout File..." Click="ShowAdHocHandout_Click"/>
+                            <MenuItem Header="Dismiss Active Handout" IsEnabled="{Binding IsHandoutVisible}" Click="DismissHandout_Click"/>
+                        </MenuItem>
+
+                        <MenuItem Header="_Help">
+                            <MenuItem Header="Keyboard &amp; Mouse Shortcuts" InputGestureText="F1" Click="OpenShortcuts_Click"/>
+                        </MenuItem>
+                    </Menu>
+
+                    <Border Width="1" Height="20" Background="{StaticResource BorderSubtleBrush}" Margin="0,0,8,0"/>
+
+                    <TextBox Text="{Binding CampaignName, UpdateSourceTrigger=PropertyChanged}" Width="145" VerticalAlignment="Center" Margin="0,0,6,0" ToolTip="Campaign Title"/>
+
+                    <Button Padding="9,4" Margin="0,0,6,0" Background="#22314E" BorderBrush="#3B568C" Click="AddScene_Click" ToolTip="Add 4K/8K Map, .dd2vtt/.uvtt, or MP4/WEBM Video (Ctrl+I)">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconPlus}" Fill="#00D2FF" Stretch="Uniform" Width="11" Height="11" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Add Map" FontSize="11.5" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource GhostIconButton}" IsEnabled="{Binding CanUndo}" Padding="6,5" Margin="0,0,2,0" Click="Undo_Click" ToolTip="Undo (Ctrl+Z)">
+                        <Path Data="{StaticResource IconUndo}" Fill="{StaticResource TextPrimaryBrush}" Stretch="Uniform" Width="14" Height="14"/>
+                    </Button>
+                    <Button Style="{StaticResource GhostIconButton}" IsEnabled="{Binding CanRedo}" Padding="6,5" Click="Redo_Click" ToolTip="Redo (Ctrl+Y)">
+                        <Path Data="{StaticResource IconRedo}" Fill="{StaticResource TextPrimaryBrush}" Stretch="Uniform" Width="14" Height="14"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Right: Live TV Broadcast Cluster -->
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <ComboBox ItemsSource="{Binding AvailableMonitors}"
+                              SelectedItem="{Binding SelectedTvMonitor}"
+                              DisplayMemberPath="DisplayLabel"
+                              Width="185" VerticalAlignment="Center" Margin="0,0,4,0"
+                              SelectionChanged="TvMonitor_SelectionChanged"
+                              ToolTip="Target TV / Secondary Monitor"/>
+                    <Button Content="↻" Padding="7,4" Margin="0,0,7,0" Click="RefreshMonitors_Click" ToolTip="Refresh Connected Displays"/>
+
+                    <Button Padding="10,4" Margin="0,0,6,0" Click="TogglePlayerWindow_Click"
+                            ToolTip="{Binding TvPowerToolTip}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource DarkButton}">
+                                <Setter Property="Background" Value="#182030"/>
+                                <Setter Property="BorderBrush" Value="#3A4A6B"/>
+                                <Setter Property="Foreground" Value="#A5B4CE"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsPlayerWindowOpen}" Value="True">
+                                        <Setter Property="Background" Value="#163F30"/>
+                                        <Setter Property="BorderBrush" Value="#2ED573"/>
+                                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsPlayerWindowOpen}" Value="True"/>
+                                            <Condition Binding="{Binding IsPlayerWindowPreviewMode}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Background" Value="#15324B"/>
+                                        <Setter Property="BorderBrush" Value="#00D2FF"/>
+                                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconTv}" Stretch="Uniform" Width="13" Height="13" Margin="0,0,5,0" VerticalAlignment="Center">
+                                <Path.Style>
+                                    <Style TargetType="Path">
+                                        <Setter Property="Fill" Value="#7E91B5"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsPlayerWindowOpen}" Value="True">
+                                                <Setter Property="Fill" Value="#2ED573"/>
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsPlayerWindowOpen}" Value="True"/>
+                                                    <Condition Binding="{Binding IsPlayerWindowPreviewMode}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Fill" Value="#00D2FF"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Path.Style>
+                            </Path>
+                            <TextBlock Text="{Binding TvPowerButtonText}" FontSize="11.5" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Padding="10,4" Margin="0,0,5,0" Click="PushToTv_Click"
+                            ToolTip="Send Staged DM Scene to Live TV (Ctrl+Enter)">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource DarkButton}">
+                                <Setter Property="Background" Value="#1B4235"/>
+                                <Setter Property="BorderBrush" Value="#2ED573"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsStagedDifferentFromLive}" Value="True">
+                                        <Setter Property="Background" Value="#5C4012"/>
+                                        <Setter Property="BorderBrush" Value="#FFD166"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconBroadcast}" Fill="#2ED573" Stretch="Uniform" Width="12" Height="12" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Push to TV" FontSize="11.5"/>
+                        </StackPanel>
+                    </Button>
+
+                    <CheckBox Content="Auto" IsChecked="{Binding AutoPushSceneOnSelect}" VerticalAlignment="Center" Margin="0,0,8,0"
+                              ToolTip="Automatically push scene to TV when clicked in Scene Strip"/>
+
+                    <ToggleButton IsChecked="{Binding IsTvBlackedOut}" Padding="9,4" Margin="0,0,6,0" Cursor="Hand"
+                                  ToolTip="Toggle TV Blackout / Standby Splash Screen (Hotkey: B)">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Setter Property="Background" Value="{StaticResource BgCardBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource BorderSubtleBrush}"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Path Data="{StaticResource IconMoon}" Fill="#FFD166" Stretch="Uniform" Width="12" Height="12" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Blackout" FontSize="11.5"/>
+                                                </StackPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgHoverBrush}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="Bd" Property="Background" Value="#7A1C28"/>
+                                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#FF4757"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+
+                    <Button Content="✕ Hide Handout" Padding="8,4" Margin="0,0,6,0"
+                            Background="#6B2230" BorderBrush="#FF4757"
+                            Visibility="{Binding IsHandoutVisible, Converter={StaticResource BoolToVis}}"
+                            Click="DismissHandout_Click"/>
+
+                    <Button Content="◫" Padding="7,4" Click="ToggleRightInspector_Click"
+                            ToolTip="Show / Hide Right Inspector Dock (Focus Mode: Tab)"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ==================== ROW 1: DYNAMIC CONTEXTUAL TOOL OPTIONS STRIP ==================== -->
+        <Border Grid.Row="1" Background="{StaticResource BgSubBarBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1" Padding="12,0">
+            <Grid VerticalAlignment="Center">
+
+                <!-- 1. SELECT & PAN OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=PanSelect}">
+                    <TextBlock Text="SELECT &amp; MOVE" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <TextBlock Text="Drag Rings, Spell AoEs, Secret Pins, or the green TV Frame  •  Right-click any element for quick options"
+                               FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                    <Button Content="🎯 Center TV on View (C)" Padding="8,3" FontSize="11" Margin="0,0,6,0" Click="CenterTv_Click"/>
+                    <Button Content="⛶ Fit Map (F)" Padding="8,3" FontSize="11" Margin="0,0,10,0" Click="FitMap_Click"/>
+                    <Button Content="🗑 Delete Selected (Del)" Padding="8,3" FontSize="11" Background="#5A1E28" BorderBrush="#FF4757"
+                            Visibility="{Binding SelectedToken, Converter={StaticResource NotNullVis}}" Click="DeleteSelected_Click"/>
+                    <Button Content="🗑 Delete Selected AoE (Del)" Padding="8,3" FontSize="11" Background="#5A1E28" BorderBrush="#FF4757"
+                            Visibility="{Binding SelectedAoeTemplate, Converter={StaticResource NotNullVis}}" Click="DeleteSelected_Click"/>
+                    <Button Content="🗑 Delete Selected Pin (Del)" Padding="8,3" FontSize="11" Background="#5A1E28" BorderBrush="#FF4757"
+                            Visibility="{Binding SelectedDmPin, Converter={StaticResource NotNullVis}}" Click="DeleteSelected_Click"/>
+                </StackPanel>
+
+                <!-- 2. FOG OF WAR (BRUSH / BOX / POLYGON) OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=FogBrush|FogBox|FogPolygon}">
+                    <TextBlock Text="FOG OF WAR" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripFogOp" Content="☀ Reveal"
+                                 IsChecked="{Binding FogOperation, Converter={StaticResource EnumMatchBool}, ConverterParameter=Reveal}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripFogOp" Content="🌑 Hide" Margin="0,0,12,0"
+                                 IsChecked="{Binding FogOperation, Converter={StaticResource EnumMatchBool}, ConverterParameter=Hide}"/>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,14,0"
+                                Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=FogBrush}">
+                        <TextBlock Text="Radius:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <Slider Minimum="10" Maximum="600" Value="{Binding FogBrushRadius}" Width="125" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="{Binding FogBrushRadius, StringFormat={}{0:0} px}" Width="44" FontSize="11.5" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Feather:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <Slider Minimum="0" Maximum="1" Value="{Binding FogFeatherSoftness}" Width="88" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <TextBlock Text="{Binding FogFeatherSoftness, StringFormat={}{0:P0}}" Width="34" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,12,0"/>
+
+                    <TextBlock Text="DM Fog:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <Slider Minimum="0.15" Maximum="0.85" Value="{Binding DmFogOpacity}" Width="88" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <TextBlock Text="{Binding DmFogOpacity, StringFormat={}{0:P0}}" Width="34" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,12,0"/>
+
+                    <Button Content="☀ Reveal All" Padding="8,3" FontSize="11" Margin="0,0,5,0" Click="RevealAll_Click"/>
+                    <Button Content="🌑 Hide All" Padding="8,3" FontSize="11" Click="HideAll_Click"/>
+                </StackPanel>
+
+                <!-- 3. 1-CLICK ROOM PREP OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=RoomPrep}">
+                    <TextBlock Text="1-CLICK ROOM PREP" FontSize="11" FontWeight="Bold" Foreground="#FFD166" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <TextBlock Text="Click room corners  •  Double-Click, Right-Click, or press Enter to save room badge"
+                               FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                    <CheckBox Content="Show Room Badges" IsChecked="{Binding ShowDmRoomBadges}" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                    <CheckBox Content="Show .uvtt Wall Guides" IsChecked="{Binding ShowUvttWallGuides}" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                    <Button Content="🗑 Clear All Rooms" Padding="8,3" FontSize="11" Background="#4A1F28" BorderBrush="#FF4757" Click="ClearAllRooms_Click"/>
+                </StackPanel>
+
+                <!-- 4. 3x3 VISUAL GRID ALIGNMENT OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=GridAlign3x3}">
+                    <TextBlock Text="3×3 GRID MATCHER" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripGridGeom" Content="Square"
+                                 IsChecked="{Binding StagedScene.Grid.GridType, Converter={StaticResource EnumMatchBool}, ConverterParameter=Square}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripGridGeom" Content="Hex Pointy"
+                                 IsChecked="{Binding StagedScene.Grid.GridType, Converter={StaticResource EnumMatchBool}, ConverterParameter=HexPointyTop}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripGridGeom" Content="Hex Flat" Margin="0,0,12,0"
+                                 IsChecked="{Binding StagedScene.Grid.GridType, Converter={StaticResource EnumMatchBool}, ConverterParameter=HexFlatTop}"/>
+
+                    <TextBlock Text="Cell:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding StagedScene.Grid.PixelsPerCell, StringFormat={}{0:0.1} px}" FontWeight="Bold" Foreground="#2ED573" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <Button Content="-0.1" Padding="6,2" FontSize="11" Margin="0,0,3,0" Tag="-0.1" Click="NudgeGridPpc_Click"/>
+                    <Button Content="+0.1" Padding="6,2" FontSize="11" Margin="0,0,12,0" Tag="0.1" Click="NudgeGridPpc_Click"/>
+                    <Button Content="✓ Done" Padding="10,3" FontSize="11" Background="#1E4638" BorderBrush="#2ED573" Click="DoneGridAlign_Click"/>
+                </StackPanel>
+
+                <!-- 5. PENCIL & SONAR PING OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=Pencil|Ping}">
+                    <TextBlock Text="TACTICAL INK &amp; PING" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Button Width="22" Height="22" Background="#FF4757" Margin="0,0,4,0" Tag="#FF4757" Click="SetPencilColor_Click"/>
+                    <Button Width="22" Height="22" Background="#FFD166" Margin="0,0,4,0" Tag="#FFD166" Click="SetPencilColor_Click"/>
+                    <Button Width="22" Height="22" Background="#00E5FF" Margin="0,0,4,0" Tag="#00E5FF" Click="SetPencilColor_Click"/>
+                    <Button Width="22" Height="22" Background="#2ED573" Margin="0,0,4,0" Tag="#2ED573" Click="SetPencilColor_Click"/>
+                    <Button Width="22" Height="22" Background="#9B5DE5" Margin="0,0,4,0" Tag="#9B5DE5" Click="SetPencilColor_Click"/>
+                    <Button Width="22" Height="22" Background="#FFFFFF" Margin="0,0,12,0" Tag="#FFFFFF" Click="SetPencilColor_Click"/>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=Pencil}">
+                        <TextBlock Text="Width:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <Slider Minimum="2" Maximum="28" Value="{Binding PencilThickness}" Width="95" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <Button Content="🗑 Clear Sketches" Padding="8,3" FontSize="11" Background="#4A1F28" BorderBrush="#FF4757" Click="ClearPencil_Click"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Click anywhere to pulse an animated beacon on both DM &amp; Player TV (or Alt+Click from any tool!)"
+                               FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"
+                               Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=Ping}"/>
+                </StackPanel>
+
+                <!-- 6. 5E DISTANCE RULER OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=Ruler}">
+                    <TextBlock Text="5E DISTANCE RULER" FontSize="11" FontWeight="Bold" Foreground="#FFD166" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripDiagRule" Content="5-5-5 (5e)"
+                                 IsChecked="{Binding StagedScene.Grid.DiagonalRule, Converter={StaticResource EnumMatchBool}, ConverterParameter=Standard5e_5_5_5}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripDiagRule" Content="5-10-5"
+                                 IsChecked="{Binding StagedScene.Grid.DiagonalRule, Converter={StaticResource EnumMatchBool}, ConverterParameter=Variant_5_10_5}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripDiagRule" Content="Euclidean" Margin="0,0,14,0"
+                                 IsChecked="{Binding StagedScene.Grid.DiagonalRule, Converter={StaticResource EnumMatchBool}, ConverterParameter=Euclidean}"/>
+                    <CheckBox Content="Show Distance Measurement Live on Player TV" IsChecked="{Binding ShowRulerOnTv}" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 7. D&D 5E SPELL AOE TEMPLATE OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=PlaceAoe}">
+                    <TextBlock Text="5E SPELL AOE" FontSize="11" FontWeight="Bold" Foreground="#FF6B35" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripAoeShape" Content="Sphere"
+                                 IsChecked="{Binding NewAoeShape, Converter={StaticResource EnumMatchBool}, ConverterParameter=Sphere}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripAoeShape" Content="5e Cone"
+                                 IsChecked="{Binding NewAoeShape, Converter={StaticResource EnumMatchBool}, ConverterParameter=Cone}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripAoeShape" Content="Cube"
+                                 IsChecked="{Binding NewAoeShape, Converter={StaticResource EnumMatchBool}, ConverterParameter=Cube}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripAoeShape" Content="Line" Margin="0,0,10,0"
+                                 IsChecked="{Binding NewAoeShape, Converter={StaticResource EnumMatchBool}, ConverterParameter=Line}"/>
+
+                    <Button Content="10ft" Padding="6,3" FontSize="11" Margin="0,0,3,0" Tag="10" Click="SetAoeSize_Click"/>
+                    <Button Content="15ft" Padding="6,3" FontSize="11" Margin="0,0,3,0" Tag="15" Click="SetAoeSize_Click"/>
+                    <Button Content="20ft" Padding="6,3" FontSize="11" Margin="0,0,3,0" Tag="20" Click="SetAoeSize_Click"/>
+                    <Button Content="30ft" Padding="6,3" FontSize="11" Margin="0,0,3,0" Tag="30" Click="SetAoeSize_Click"/>
+                    <Button Content="60ft" Padding="6,3" FontSize="11" Margin="0,0,6,0" Tag="60" Click="SetAoeSize_Click"/>
+                    <TextBox Text="{Binding NewAoeSizeFeet, StringFormat={}{0:0}, UpdateSourceTrigger=PropertyChanged}" Width="40" VerticalAlignment="Center" Margin="0,0,3,0" ToolTip="Custom Size (ft)"/>
+                    <TextBlock Text="ft" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+                    <Button Width="20" Height="20" Background="#FF6B35" Margin="0,0,3,0" Tag="#FF6B35" Click="SetAoeColor_Click" ToolTip="Fire"/>
+                    <Button Width="20" Height="20" Background="#00E5FF" Margin="0,0,3,0" Tag="#00E5FF" Click="SetAoeColor_Click" ToolTip="Cold / Lightning"/>
+                    <Button Width="20" Height="20" Background="#9B5DE5" Margin="0,0,3,0" Tag="#9B5DE5" Click="SetAoeColor_Click" ToolTip="Arcane / Necrotic"/>
+                    <Button Width="20" Height="20" Background="#2ED573" Margin="0,0,3,0" Tag="#2ED573" Click="SetAoeColor_Click" ToolTip="Acid / Poison"/>
+                    <Button Width="20" Height="20" Background="#FFD166" Margin="0,0,10,0" Tag="#FFD166" Click="SetAoeColor_Click" ToolTip="Radiant"/>
+
+                    <CheckBox Content="Always Show Labels" IsChecked="{Binding ShowAoeLabelsAlways}" VerticalAlignment="Center" Margin="0,0,10,0"
+                              ToolTip="When off, AoE size pills appear cleanly only on hover or selection"/>
+
+                    <Button Content="🗑 Clear All AoEs" Padding="8,3" FontSize="11" Background="#4E1D27" BorderBrush="#FF4757" Click="ClearAllAoes_Click"/>
+                </StackPanel>
+
+                <!-- 8. MINIATURE GLOW RINGS & MONSTER TOKENS OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=PlaceToken}">
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripTokKind" Content="◯ Glow Ring"
+                                 IsChecked="{Binding NewTokenKind, Converter={StaticResource EnumMatchBool}, ConverterParameter=ConditionRing}"/>
+                    <RadioButton Style="{StaticResource PillRadio}" GroupName="StripTokKind" Content="● Token" Margin="0,0,8,0"
+                                 IsChecked="{Binding NewTokenKind, Converter={StaticResource EnumMatchBool}, ConverterParameter=NumberedToken}"/>
+
+                    <Button Content="1×1" Padding="5,3" FontSize="11" Margin="0,0,2,0" Tag="1" Click="SetTokenSize_Click" ToolTip="Medium / Small (1×1)"/>
+                    <Button Content="2×2" Padding="5,3" FontSize="11" Margin="0,0,2,0" Tag="2" Click="SetTokenSize_Click" ToolTip="Large (2×2)"/>
+                    <Button Content="3×3" Padding="5,3" FontSize="11" Margin="0,0,2,0" Tag="3" Click="SetTokenSize_Click" ToolTip="Huge (3×3)"/>
+                    <Button Content="4×4" Padding="5,3" FontSize="11" Margin="0,0,8,0" Tag="4" Click="SetTokenSize_Click" ToolTip="Gargantuan (4×4)"/>
+
+                    <!-- 1-Click Condition Preset Chips -->
+                    <Button Content="Glow Only" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#00E5FF" Tag="GlowOnly" Click="ConditionPreset_Click" ToolTip="Clean hollow ring with no text label"/>
+                    <Button Content="Concentrating" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#00E5FF" Tag="Concentrating" Click="ConditionPreset_Click"/>
+                    <Button Content="Bloodied" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#FF4757" Tag="Bloodied" Click="ConditionPreset_Click"/>
+                    <Button Content="Blessed" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#FFD166" Tag="Blessed" Click="ConditionPreset_Click"/>
+                    <Button Content="Hexed" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#9B5DE5" Tag="Hexed" Click="ConditionPreset_Click"/>
+                    <Button Content="Poisoned" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#2ED573" Tag="Poisoned" Click="ConditionPreset_Click"/>
+                    <Button Content="Aura 10ft" Padding="6,3" FontSize="10.5" Margin="0,0,3,0" BorderBrush="#FFD166" Tag="Aura10" Click="ConditionPreset_Click"/>
+                    <Button Content="Spirit 15ft" Padding="6,3" FontSize="10.5" Margin="0,0,8,0" BorderBrush="#00F5D4" Tag="Aura15" Click="ConditionPreset_Click"/>
+
+                    <TextBox Text="{Binding NewTokenLabel, UpdateSourceTrigger=PropertyChanged}" Width="82" VerticalAlignment="Center" Margin="0,0,6,0"
+                             ToolTip="Optional Ring/Token Label (leave empty for clean glow-only ring)"/>
+                    <CheckBox Content="Snap" IsChecked="{Binding SnapTokensToGrid}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <Button Content="🗑 Clear All" Padding="8,3" FontSize="11" Background="#4E1D27" BorderBrush="#FF4757" Click="ClearAllTokens_Click"/>
+                </StackPanel>
+
+                <!-- 9. SECRET DM PIN OPTIONS -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                            Visibility="{Binding ActiveTool, Converter={StaticResource EnumMatchVis}, ConverterParameter=PlaceDmPin}">
+                    <TextBlock Text="SECRET DM PINS" FontSize="11" FontWeight="Bold" Foreground="#FFD166" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <TextBlock Text="Click map to place a secret room/trap note pin (100% invisible on Player TV)  •  Edit notes in Right Inspector"
+                               FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                    <Button Content="🗑 Clear All Pins" Padding="8,3" FontSize="11" Background="#4E1D27" BorderBrush="#FF4757" Click="ClearAllDmPins_Click"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <!-- ==================== ROW 2: MAIN STUDIO WORKSPACE ==================== -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="68"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 2A. CRISP VECTOR LEFT TOOL RAIL -->
+            <Border Grid.Column="0" Background="{StaticResource BgPanelBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,1,0">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Margin="0,6">
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=PanSelect}"
+                                     ToolTip="Select / Move Elements / Drag TV Frame (Hotkey: 1)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconSelect}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Select" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <Separator Margin="10,4"/>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=FogBrush}"
+                                     ToolTip="Fog Brush — Left-drag paints, Right-drag inverts! (Hotkey: 2)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconFogBrush}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Fog Brush" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=FogBox}"
+                                     ToolTip="Fog Rectangle Reveal / Hide (Hotkey: 3)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconFogBox}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Fog Box" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=FogPolygon}"
+                                     ToolTip="Fog Polygon — Click vertices, Double-click/Right-click/Enter to apply (Hotkey: 4)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconFogPoly}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Fog Poly" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=RoomPrep}"
+                                     ToolTip="Draw Pre-pped Clickable Room Masks for 1-Click Reveals! (Hotkey: 5)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconPrepRoom}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Rooms" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <Separator Margin="10,4"/>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=GridAlign3x3}"
+                                     ToolTip="Interactive 3×3 Visual Grid Alignment Wizard (Hotkey: 6)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconGrid3x3}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="3×3 Grid" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=Pencil}"
+                                     ToolTip="Tactical Pencil Sketch (Hotkey: 7)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconPencil}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Pencil" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=Ping}"
+                                     ToolTip="Animated Sonar Ping on TV &amp; DM — or Alt+Click anytime! (Hotkey: 8)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconPing}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Ping" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=Ruler}"
+                                     ToolTip="D&amp;D 5e Distance Measurement Ruler (Hotkey: 9)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconRuler}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Ruler" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <Separator Margin="10,4"/>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=PlaceAoe}"
+                                     ToolTip="Place &amp; Aim D&amp;D 5e Spell AoE Template (Hotkey: A)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconSpellAoe}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Spell AoE" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=PlaceToken}"
+                                     ToolTip="Place Glowing Condition/Aura Ring (under Physical Minis!) or Monster Token (Hotkey: T)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconMiniRing}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="Mini Ring" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource ToolRailButton}" GroupName="DmTools"
+                                     IsChecked="{Binding ActiveTool, Converter={StaticResource EnumMatchBool}, ConverterParameter=PlaceDmPin}"
+                                     ToolTip="Place Secret DM-Only Room / Trap Note Pin (Hotkey: N)">
+                            <StackPanel>
+                                <Path Data="{StaticResource IconDmPin}" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}" Stretch="Uniform" Width="16" Height="16" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                                <TextBlock Text="DM Pin" FontSize="10" HorizontalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                            </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- 2B. CENTER 8K VIEWPORT + FLOATING HUD PILLS + COLLAPSIBLE SCENE STRIP -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 8K GPU Map Viewport -->
+                <Grid Grid.Row="0" ClipToBounds="True">
+                    <controls:MapViewportControl x:Name="DmViewport" ViewModel="{Binding}" IsDmView="True"/>
+
+                    <!-- Top-Left Scene & Broadcast Status Pill -->
+                    <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12"
+                            Background="#E0131722" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1"
+                            CornerRadius="7" Padding="11,5"
+                            Visibility="{Binding HasStagedScene, Converter={StaticResource BoolToVis}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding StagedScene.Name}" FontWeight="Bold" FontSize="12.5" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{Binding StagedScene.DimensionsBadge}" Foreground="{StaticResource TextMutedBrush}" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+                            <Border Background="#184737" CornerRadius="4" Padding="6,2" VerticalAlignment="Center"
+                                    Visibility="{Binding IsSceneActivelyBroadcasting, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="● LIVE ON TV" FontSize="10" FontWeight="Bold" Foreground="#2ED573"/>
+                            </Border>
+
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsSceneQueuedWhileTvOff, Converter={StaticResource BoolToVis}}">
+                                <Border Background="#1B2A42" BorderBrush="#35527E" BorderThickness="1" CornerRadius="4" Padding="6,2" VerticalAlignment="Center" Margin="0,0,6,0">
+                                    <TextBlock Text="◌ QUEUED (TV OFF)" FontSize="10" FontWeight="Bold" Foreground="#7CC4FA"/>
+                                </Border>
+                                <Button Content="Turn TV On (F12)" Padding="7,2" FontSize="10.5" Background="#163F30" BorderBrush="#2ED573" Click="TogglePlayerWindow_Click"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsStagedDifferentFromLive, Converter={StaticResource BoolToVis}}">
+                                <Border Background="#4E3814" CornerRadius="4" Padding="6,2" VerticalAlignment="Center" Margin="0,0,6,0">
+                                    <TextBlock Text="● STAGED ON DM ONLY" FontSize="10" FontWeight="Bold" Foreground="#FFD166"/>
+                                </Border>
+                                <Button Content="Push Now" Padding="7,2" FontSize="10.5" Background="#1E4638" BorderBrush="#2ED573" Click="PushToTv_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Bottom-Right Interactive Camera & Focus Floating Pill -->
+                    <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="12"
+                            Background="#E6131722" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1"
+                            CornerRadius="7" Padding="5,3"
+                            Visibility="{Binding HasStagedScene, Converter={StaticResource BoolToVis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Style="{StaticResource GhostIconButton}" Content="−" FontWeight="Bold" Padding="7,2" Click="ZoomOut_Click" ToolTip="Zoom Out"/>
+                            <Button Style="{StaticResource GhostIconButton}" Content="{Binding DmZoomPercentText}" Padding="7,2" Foreground="#00D2FF" FontWeight="Bold" Click="Zoom100_Click" ToolTip="Click to Reset Zoom to 100% (Ctrl+0)"/>
+                            <Button Style="{StaticResource GhostIconButton}" Content="+" FontWeight="Bold" Padding="7,2" Click="ZoomIn_Click" ToolTip="Zoom In"/>
+                            <Border Width="1" Height="16" Background="{StaticResource BorderSubtleBrush}" Margin="4,0"/>
+                            <Button Style="{StaticResource GhostIconButton}" Content="Fit" Padding="7,2" Click="FitMap_Click" ToolTip="Fit Map to DM View (F)"/>
+                            <Button Style="{StaticResource GhostIconButton}" Padding="7,2" Click="CenterTv_Click" ToolTip="Center TV Camera on Current DM View (Hotkey: C)">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="{StaticResource IconTarget}" Fill="#2ED573" Stretch="Uniform" Width="12" Height="12" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Center TV" FontSize="11" Foreground="#2ED573" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Button>
+                            <Border Width="1" Height="16" Background="{StaticResource BorderSubtleBrush}" Margin="4,0"/>
+                            <Button Style="{StaticResource GhostIconButton}" Content="⇔ Focus" Padding="7,2" Click="ToggleFocusMode_Click" ToolTip="Focus Mode — Collapse/Expand Sidebars (Hotkey: Tab)"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Collapsible Bottom Visual Scene Strip -->
+                <Border Grid.Row="1" Background="{StaticResource BgPanelBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,1,0,0" Padding="10,4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <DockPanel Grid.Row="0">
+                            <Button Style="{StaticResource GhostIconButton}" Padding="6,2" Margin="0,0,6,0" Click="ToggleSceneStrip_Click"
+                                    ToolTip="Collapse / Expand Scene Strip">
+                                <TextBlock FontSize="11" FontWeight="Bold" Foreground="#00D2FF">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="▾ SCENES"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSceneStripExpanded}" Value="False">
+                                                    <Setter Property="Text" Value="▴ SCENES"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Button>
+                            <TextBlock Text="Click to Stage Privately on DM  •  Double-Click or 'Push to TV' to Broadcast  •  Right-Click Card for Options"
+                                       FontSize="11" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                            <Button DockPanel.Dock="Right" Content="+ Add Scene" Padding="8,2" FontSize="11" Click="AddScene_Click"/>
+                        </DockPanel>
+
+                        <ScrollViewer Grid.Row="1" Height="102" Margin="0,4,0,2"
+                                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                                      Visibility="{Binding IsSceneStripExpanded, Converter={StaticResource BoolToVis}}">
+                            <StackPanel Orientation="Horizontal">
+                                <ItemsControl ItemsSource="{Binding Scenes}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Width="170" Margin="0,0,8,0" CornerRadius="7" Padding="5"
+                                                    Background="{StaticResource BgCardBrush}" Cursor="Hand"
+                                                    MouseLeftButtonDown="SceneCard_MouseLeftButtonDown">
+                                                <Border.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="🚀 Push Scene to Live TV" Click="SceneMenu_Push_Click"/>
+                                                        <MenuItem Header="⧉ Duplicate Scene" Click="SceneMenu_Duplicate_Click"/>
+                                                        <MenuItem Header="◀ Move Scene Left" Click="SceneMenu_MoveLeft_Click"/>
+                                                        <MenuItem Header="▶ Move Scene Right" Click="SceneMenu_MoveRight_Click"/>
+                                                        <Separator/>
+                                                        <MenuItem Header="🌑 Reset Scene Fog (Hide All)" Click="SceneMenu_ResetFog_Click"/>
+                                                        <MenuItem Header="🗑 Remove Scene" Click="RemoveSceneCard_Click"/>
+                                                    </ContextMenu>
+                                                </Border.ContextMenu>
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="BorderBrush" Value="{StaticResource BorderSubtleBrush}"/>
+                                                        <Setter Property="BorderThickness" Value="1.5"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsQueuedWhileTvOff}" Value="True">
+                                                                <Setter Property="BorderBrush" Value="#3D6B99"/>
+                                                                <Setter Property="BorderThickness" Value="2"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsStaged}" Value="True">
+                                                                <Setter Property="BorderBrush" Value="#00D2FF"/>
+                                                                <Setter Property="BorderThickness" Value="2"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsActivelyBroadcasting}" Value="True">
+                                                                <Setter Property="BorderBrush" Value="#2ED573"/>
+                                                                <Setter Property="BorderThickness" Value="2"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Border Grid.Row="0" Background="#0D1017" CornerRadius="4" ClipToBounds="True">
+                                                        <Grid>
+                                                            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill"/>
+                                                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"
+                                                                    Background="#D9143D29" CornerRadius="3" Padding="5,1"
+                                                                    Visibility="{Binding IsActivelyBroadcasting, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="LIVE" FontSize="9.5" FontWeight="Bold" Foreground="#2ED573"/>
+                                                            </Border>
+                                                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"
+                                                                    Background="#D917253B" CornerRadius="3" Padding="5,1"
+                                                                    Visibility="{Binding IsQueuedWhileTvOff, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="QUEUED" FontSize="9.5" FontWeight="Bold" Foreground="#7CC4FA"/>
+                                                            </Border>
+                                                            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                                                    Background="#CC16243B" CornerRadius="3" Padding="5,1"
+                                                                    Visibility="{Binding IsStaged, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="DM" FontSize="9.5" FontWeight="Bold" Foreground="#00D2FF"/>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <DockPanel Grid.Row="1" Margin="2,4,0,0">
+                                                        <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Content="✕" Padding="4,0" FontSize="10"
+                                                                Click="RemoveSceneCard_Click" ToolTip="Remove Scene"/>
+                                                        <TextBlock Text="{Binding Name}" FontSize="11.5" FontWeight="SemiBold"
+                                                                   TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- Trailing + Add Map Drop Card -->
+                                <Button Width="130" Margin="0,0,4,0" Background="#161C29" BorderBrush="#2E3B59"
+                                        Click="AddScene_Click" ToolTip="Add 4K/8K Battlemap, .dd2vtt/.uvtt, or MP4/WEBM Video">
+                                    <StackPanel>
+                                        <Path Data="{StaticResource IconPlus}" Fill="#00D2FF" Stretch="Uniform" Width="18" Height="18" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                                        <TextBlock Text="Add Map / Video" FontSize="11" Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- 2C. COLLAPSIBLE RIGHT INSPECTOR DOCK (4 FOCUSED TABS) -->
+            <Border Grid.Column="2" Width="322" Background="{StaticResource BgPanelBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1,0,0,0"
+                    Visibility="{Binding IsRightInspectorExpanded, Converter={StaticResource BoolToVis}}">
+                <TabControl Background="Transparent" BorderThickness="0" Padding="0">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="FontSize" Value="11.5"/>
+                            <Setter Property="Padding" Value="10,8"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border x:Name="Bd" Background="#131722" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,2" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter ContentSource="Header"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgPanelBrush}"/>
+                                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource AccentCyanBrush}"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <!-- ==================== TAB 1: LAYERS, ROOMS & SELECTED ITEM ==================== -->
+                    <TabItem Header="Layers">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+                            <StackPanel>
+                                <!-- SCENE VISIBILITY & LAYER MANAGER -->
+                                <TextBlock Text="SCENE LAYERS &amp; VISIBILITY" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,8"/>
+
+                                <Border Background="{StaticResource BgCardBrush}" CornerRadius="6" Padding="9,7" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <DockPanel Margin="0,2">
+                                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                                <Button Style="{StaticResource GhostIconButton}" Content="☀" Padding="5,1" Click="RevealAll_Click" ToolTip="Reveal All Fog"/>
+                                                <Button Style="{StaticResource GhostIconButton}" Content="🌑" Padding="5,1" Click="HideAll_Click" ToolTip="Reset / Hide All Fog"/>
+                                            </StackPanel>
+                                            <CheckBox Content="Fog Preview on DM" IsChecked="{Binding ShowFogOnDm}" ToolTip="Player TV always renders full fog even when unchecked here!"/>
+                                        </DockPanel>
+
+                                        <DockPanel Margin="0,2">
+                                            <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Click="ClearAllRooms_Click" ToolTip="Clear All 1-Click Rooms">
+                                                <Path Data="{StaticResource IconTrash}" Fill="{StaticResource TextMutedBrush}" Stretch="Uniform" Width="12" Height="12"/>
+                                            </Button>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.RoomsCountText}" Foreground="{StaticResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <CheckBox Content="1-Click Fog Rooms" IsChecked="{Binding ShowDmRoomBadges}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Margin="0,2">
+                                            <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Click="ClearAllTokens_Click" ToolTip="Clear All Mini Rings &amp; Tokens">
+                                                <Path Data="{StaticResource IconTrash}" Fill="{StaticResource TextMutedBrush}" Stretch="Uniform" Width="12" Height="12"/>
+                                            </Button>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.TokensCountText}" Foreground="{StaticResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <CheckBox Content="Mini Rings &amp; Tokens" IsChecked="{Binding ShowTokensLayer}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Margin="0,2">
+                                            <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Click="ClearAllAoes_Click" ToolTip="Clear All Spell AoE Templates">
+                                                <Path Data="{StaticResource IconTrash}" Fill="{StaticResource TextMutedBrush}" Stretch="Uniform" Width="12" Height="12"/>
+                                            </Button>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.AoeCountText}" Foreground="{StaticResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <CheckBox Content="Spell AoE Templates" IsChecked="{Binding ShowAoeLayer}"/>
+                                        </DockPanel>
+
+                                        <CheckBox Content="Always Show AoE Size Pills" IsChecked="{Binding ShowAoeLabelsAlways}" Margin="22,1,0,3" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}"/>
+
+                                        <DockPanel Margin="0,2">
+                                            <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Click="ClearPencil_Click" ToolTip="Clear All Pencil Sketches">
+                                                <Path Data="{StaticResource IconTrash}" Fill="{StaticResource TextMutedBrush}" Stretch="Uniform" Width="12" Height="12"/>
+                                            </Button>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.SketchesCountText}" Foreground="{StaticResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <CheckBox Content="Pencil Sketches" IsChecked="{Binding ShowPencilLayer}"/>
+                                        </DockPanel>
+
+                                        <DockPanel Margin="0,2">
+                                            <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Click="ClearAllDmPins_Click" ToolTip="Clear All Secret DM Pins">
+                                                <Path Data="{StaticResource IconTrash}" Fill="{StaticResource TextMutedBrush}" Stretch="Uniform" Width="12" Height="12"/>
+                                            </Button>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.PinsCountText}" Foreground="{StaticResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <CheckBox Content="Secret DM Note Pins" IsChecked="{Binding ShowDmPinsLayer}"/>
+                                        </DockPanel>
+
+                                        <Separator Margin="0,5"/>
+                                        <CheckBox Content="Show .uvtt Walls &amp; Doors (DM)" IsChecked="{Binding ShowUvttWallGuides}"/>
+                                        <CheckBox Content="Show Green TV Viewport Guide" IsChecked="{Binding ShowTvFrameGuide}"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- SELECTED RING / TOKEN INSPECTOR -->
+                                <Border Background="{StaticResource BgCardBrush}" BorderBrush="#00E5FF" BorderThickness="1" CornerRadius="6" Padding="9" Margin="0,0,0,12"
+                                        Visibility="{Binding SelectedToken, Converter={StaticResource NotNullVis}}">
+                                    <StackPanel>
+                                        <TextBlock Text="SELECTED MINI RING / TOKEN" FontSize="10.5" FontWeight="Bold" Foreground="#00E5FF" Margin="0,0,0,6"/>
+                                        <DockPanel Margin="0,0,0,6">
+                                            <TextBlock Text="Label:" Width="44" VerticalAlignment="Center" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}"/>
+                                            <TextBox Text="{Binding SelectedToken.Label, UpdateSourceTrigger=PropertyChanged}" ToolTip="Clear text for a clean glow-only ring!"/>
+                                        </DockPanel>
+                                        <UniformGrid Columns="4" Margin="0,0,0,6">
+                                            <Button Content="None" FontSize="10.5" Padding="3" Margin="0,0,3,0" Tag="0" Click="SetTokenAura_Click" ToolTip="No Outer Aura"/>
+                                            <Button Content="10ft" FontSize="10.5" Padding="3" Margin="0,0,3,0" Tag="10" Click="SetTokenAura_Click" ToolTip="10ft Aura"/>
+                                            <Button Content="15ft" FontSize="10.5" Padding="3" Margin="0,0,3,0" Tag="15" Click="SetTokenAura_Click" ToolTip="15ft Aura"/>
+                                            <Button Content="30ft" FontSize="10.5" Padding="3" Tag="30" Click="SetTokenAura_Click" ToolTip="30ft Aura"/>
+                                        </UniformGrid>
+                                        <CheckBox Content="Visible to Players on TV" IsChecked="{Binding SelectedToken.VisibleToPlayers}"/>
+                                        <Button Content="Delete Ring / Token (Del)" Background="#5A1E28" BorderBrush="#FF4757" Margin="0,6,0,0" Click="DeleteSelected_Click"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- SELECTED SPELL AOE INSPECTOR -->
+                                <Border Background="{StaticResource BgCardBrush}" BorderBrush="#FF6B35" BorderThickness="1" CornerRadius="6" Padding="9" Margin="0,0,0,12"
+                                        Visibility="{Binding SelectedAoeTemplate, Converter={StaticResource NotNullVis}}">
+                                    <StackPanel>
+                                        <TextBlock Text="SELECTED SPELL AOE" FontSize="10.5" FontWeight="Bold" Foreground="#FF6B35" Margin="0,0,0,6"/>
+                                        <DockPanel Margin="0,0,0,6">
+                                            <TextBlock Text="Label:" Width="44" VerticalAlignment="Center" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}"/>
+                                            <TextBox Text="{Binding SelectedAoeTemplate.Label, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,0,0,4">
+                                            <TextBlock Text="Aim Angle:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}"/>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding SelectedAoeTemplate.DirectionDegrees, StringFormat={}{0:0}°}" FontSize="11.5" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                        <Slider Minimum="-180" Maximum="180" Value="{Binding SelectedAoeTemplate.DirectionDegrees}" Margin="0,0,0,6"/>
+                                        <CheckBox Content="Visible to Players on TV" IsChecked="{Binding SelectedAoeTemplate.VisibleToPlayers}"/>
+                                        <Button Content="Delete Spell AoE (Del)" Background="#5A1E28" BorderBrush="#FF4757" Margin="0,6,0,0" Click="DeleteSelected_Click"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- SELECTED DM SECRET PIN INSPECTOR -->
+                                <Border Background="{StaticResource BgCardBrush}" BorderBrush="#FFD166" BorderThickness="1" CornerRadius="6" Padding="9" Margin="0,0,0,12"
+                                        Visibility="{Binding SelectedDmPin, Converter={StaticResource NotNullVis}}">
+                                    <StackPanel>
+                                        <TextBlock Text="🔒 SECRET DM PIN (NEVER ON TV)" FontSize="10.5" FontWeight="Bold" Foreground="#FFD166" Margin="0,0,0,6"/>
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="56"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding SelectedDmPin.Code, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,6,0" ToolTip="Map Badge Code"/>
+                                            <TextBox Grid.Column="1" Text="{Binding SelectedDmPin.Title, UpdateSourceTrigger=PropertyChanged}" ToolTip="Room / Trap Title"/>
+                                        </Grid>
+                                        <TextBox Text="{Binding SelectedDmPin.Notes, UpdateSourceTrigger=PropertyChanged}"
+                                                 AcceptsReturn="True" TextWrapping="Wrap" Height="125" VerticalScrollBarVisibility="Auto"/>
+                                        <Button Content="Delete Secret Pin (Del)" Background="#5A1E28" BorderBrush="#FF4757" Margin="0,6,0,0" Click="DeleteSelected_Click"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- PRE-PPED 1-CLICK FOG ROOMS LIST -->
+                                <Border Background="{StaticResource BgCardBrush}" CornerRadius="6" Padding="9"
+                                        Visibility="{Binding HasStagedScene, Converter={StaticResource BoolToVis}}">
+                                    <StackPanel>
+                                        <DockPanel Margin="0,0,0,6">
+                                            <TextBlock Text="1-CLICK FOG ROOMS" FontSize="11" FontWeight="Bold" Foreground="#FFD166" VerticalAlignment="Center"/>
+                                            <Button DockPanel.Dock="Right" Content="+ Draw Room" Padding="7,2" FontSize="11" Click="ActivateRoomPrep_Click"/>
+                                        </DockPanel>
+                                        <ItemsControl ItemsSource="{Binding StagedScene.Rooms}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <DockPanel Margin="0,2">
+                                                        <Ellipse Width="8" Height="8" VerticalAlignment="Center" Margin="0,0,6,0">
+                                                            <Ellipse.Style>
+                                                                <Style TargetType="Ellipse">
+                                                                    <Setter Property="Fill" Value="#FFA502"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsRevealed}" Value="True">
+                                                                            <Setter Property="Fill" Value="#2ED573"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Ellipse.Style>
+                                                        </Ellipse>
+                                                        <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Content="✕" Padding="5,2" Margin="2,0,0,0" Click="DeleteRoomItem_Click" ToolTip="Delete Room"/>
+                                                        <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Content="🎯" Padding="5,2" Margin="2,0,0,0" Click="FocusRoomItem_Click" ToolTip="Center TV on Room"/>
+                                                        <Button DockPanel.Dock="Right" Content="Toggle" Padding="7,2" FontSize="10.5" Margin="4,0,0,0" Click="ToggleRoomItem_Click"/>
+                                                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontSize="11.5"/>
+                                                    </DockPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ==================== TAB 2: HANDOUT GALLERY ==================== -->
+                    <TabItem Header="Handouts">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="PRE-STAGED TV HANDOUT GALLERY" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,6"/>
+                                <TextBlock Text="Prep monster portraits, NPC art, letters, and item cards ahead of session and project them to the TV in 1 click:"
+                                           TextWrapping="Wrap" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,10"/>
+
+                                <UniformGrid Columns="2" Margin="0,0,0,10">
+                                    <Button Content="+ Add Handouts..." Background="#22314E" BorderBrush="#3B568C" Margin="0,0,4,0" Click="AddHandouts_Click"/>
+                                    <Button Content="Ad-Hoc File..." Margin="4,0,0,0" Click="ShowAdHocHandout_Click" ToolTip="Project an image immediately without saving to gallery"/>
+                                </UniformGrid>
+
+                                <Border Background="#4E1D27" BorderBrush="#FF4757" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,0,0,10"
+                                        Visibility="{Binding IsHandoutVisible, Converter={StaticResource BoolToVis}}">
+                                    <DockPanel>
+                                        <Button DockPanel.Dock="Right" Content="✕ Dismiss" Padding="8,3" Background="#7A1C28" BorderBrush="#FF4757" Click="DismissHandout_Click"/>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="● PROJECTING ON TV" FontSize="10" FontWeight="Bold" Foreground="#FFD166"/>
+                                            <TextBlock Text="{Binding ActiveHandoutTitle}" FontSize="12" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Border>
+
+                                <ItemsControl ItemsSource="{Binding Handouts}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{StaticResource BgCardBrush}" CornerRadius="6" Padding="7" Margin="0,0,0,7">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="BorderBrush" Value="{StaticResource BorderSubtleBrush}"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsLiveOnTv}" Value="True">
+                                                                <Setter Property="BorderBrush" Value="#2ED573"/>
+                                                                <Setter Property="BorderThickness" Value="2"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="56"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Grid.Column="0" Height="52" Background="#0D1017" CornerRadius="4" ClipToBounds="True" Margin="0,0,8,0">
+                                                        <Image Source="{Binding Thumbnail}" Stretch="UniformToFill"/>
+                                                    </Border>
+                                                    <StackPanel Grid.Column="1">
+                                                        <DockPanel Margin="0,0,0,5">
+                                                            <Button DockPanel.Dock="Right" Style="{StaticResource GhostIconButton}" Content="✕" Padding="4,1" Margin="4,0,0,0" Click="RemoveHandoutCard_Click" ToolTip="Remove Handout"/>
+                                                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" FontSize="11.5"/>
+                                                        </DockPanel>
+                                                        <Button Content="📺 Project on TV" Padding="8,3" FontSize="11" Background="#1D3D33" BorderBrush="#2ED573" Click="ProjectHandoutCard_Click"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ==================== TAB 3: GRID & MEDIA ==================== -->
+                    <TabItem Header="Grid &amp; Media">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+                            <StackPanel IsEnabled="{Binding HasStagedScene}">
+                                <TextBlock Text="MAP GRID CALIBRATION" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,8"/>
+
+                                <CheckBox Content="Display Tactical Grid Overlay" IsChecked="{Binding StagedScene.Grid.IsVisible}" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+                                <Button Content="🎯 Interactive 3×3 Grid Matcher" Background="#1D3A4C" BorderBrush="#00D2FF"
+                                        Padding="10,7" Margin="0,0,0,12" Click="Start3x3GridAlign_Click"
+                                        ToolTip="Drag a 3x3 guide box over 9 squares on the map artwork to align the grid in seconds!"/>
+
+                                <TextBlock Text="Grid Geometry:" Foreground="{StaticResource TextMutedBrush}" FontSize="12" Margin="0,0,0,4"/>
+                                <WrapPanel Margin="0,0,0,10">
+                                    <RadioButton Style="{StaticResource PillRadio}" GroupName="TabGridGeom" Content="Square"
+                                                 IsChecked="{Binding StagedScene.Grid.GridType, Converter={StaticResource EnumMatchBool}, ConverterParameter=Square}"/>
+                                    <RadioButton Style="{StaticResource PillRadio}" GroupName="TabGridGeom" Content="Hex Pointy"
+                                                 IsChecked="{Binding StagedScene.Grid.GridType, Converter={StaticResource EnumMatchBool}, ConverterParameter=HexPointyTop}"/>
+                                    <RadioButton Style="{StaticResource PillRadio}" GroupName="TabGridGeom" Content="Hex Flat"
+                                                 IsChecked="{Binding StagedScene.Grid.GridType, Converter={StaticResource EnumMatchBool}, ConverterParameter=HexFlatTop}"/>
+                                </WrapPanel>
+
+                                <DockPanel Margin="0,0,0,4">
+                                    <TextBlock Text="Pixels Per Cell (5ft):" Foreground="{StaticResource TextMutedBrush}" FontSize="12" VerticalAlignment="Center"/>
+                                    <TextBox DockPanel.Dock="Right" Width="72" Text="{Binding StagedScene.Grid.PixelsPerCell, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+                                <Slider Minimum="16" Maximum="400" Value="{Binding StagedScene.Grid.PixelsPerCell}" Margin="0,0,0,6"/>
+                                <UniformGrid Columns="4" Margin="0,0,0,12">
+                                    <Button Content="-1 px" FontSize="11" Padding="3" Margin="0,0,3,0" Tag="-1" Click="NudgeGridPpc_Click"/>
+                                    <Button Content="-0.1" FontSize="11" Padding="3" Margin="0,0,3,0" Tag="-0.1" Click="NudgeGridPpc_Click"/>
+                                    <Button Content="+0.1" FontSize="11" Padding="3" Margin="0,0,3,0" Tag="0.1" Click="NudgeGridPpc_Click"/>
+                                    <Button Content="+1 px" FontSize="11" Padding="3" Tag="1" Click="NudgeGridPpc_Click"/>
+                                </UniformGrid>
+
+                                <DockPanel Margin="0,0,0,4">
+                                    <TextBlock Text="Grid Offset X:" Foreground="{StaticResource TextMutedBrush}" FontSize="12"/>
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.Grid.OffsetX, StringFormat={}{0:0.0} px}" FontSize="12" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <Slider Minimum="0" Maximum="300" Value="{Binding StagedScene.Grid.OffsetX}" Margin="0,0,0,8"/>
+
+                                <DockPanel Margin="0,0,0,4">
+                                    <TextBlock Text="Grid Offset Y:" Foreground="{StaticResource TextMutedBrush}" FontSize="12"/>
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.Grid.OffsetY, StringFormat={}{0:0.0} px}" FontSize="12" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <Slider Minimum="0" Maximum="300" Value="{Binding StagedScene.Grid.OffsetY}" Margin="0,0,0,10"/>
+
+                                <DockPanel Margin="0,0,0,4">
+                                    <TextBlock Text="Grid Opacity:" Foreground="{StaticResource TextMutedBrush}" FontSize="12"/>
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding StagedScene.Grid.Opacity, StringFormat={}{0:P0}}" FontSize="12" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <Slider Minimum="0.05" Maximum="1.0" Value="{Binding StagedScene.Grid.Opacity}" Margin="0,0,0,8"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                    <TextBlock Text="Color:" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource TextMutedBrush}"/>
+                                    <Button Width="24" Height="24" Background="#FFFFFF" Margin="0,0,5,0" Tag="#FFFFFF" Click="SetGridColor_Click"/>
+                                    <Button Width="24" Height="24" Background="#000000" Margin="0,0,5,0" Tag="#000000" Click="SetGridColor_Click"/>
+                                    <Button Width="24" Height="24" Background="#FFD166" Margin="0,0,5,0" Tag="#FFD166" Click="SetGridColor_Click"/>
+                                    <Button Width="24" Height="24" Background="#00E5FF" Tag="#00E5FF" Click="SetGridColor_Click"/>
+                                </StackPanel>
+
+                                <TextBlock Text="Ruler Diagonal Rule:" Foreground="{StaticResource TextMutedBrush}" FontSize="12" Margin="0,0,0,4"/>
+                                <WrapPanel Margin="0,0,0,12">
+                                    <RadioButton Style="{StaticResource PillRadio}" GroupName="TabDiagRule" Content="5-5-5 (5e)" Margin="0,0,4,4"
+                                                 IsChecked="{Binding StagedScene.Grid.DiagonalRule, Converter={StaticResource EnumMatchBool}, ConverterParameter=Standard5e_5_5_5}"/>
+                                    <RadioButton Style="{StaticResource PillRadio}" GroupName="TabDiagRule" Content="5-10-5" Margin="0,0,4,4"
+                                                 IsChecked="{Binding StagedScene.Grid.DiagonalRule, Converter={StaticResource EnumMatchBool}, ConverterParameter=Variant_5_10_5}"/>
+                                    <RadioButton Style="{StaticResource PillRadio}" GroupName="TabDiagRule" Content="Euclidean" Margin="0,0,4,4"
+                                                 IsChecked="{Binding StagedScene.Grid.DiagonalRule, Converter={StaticResource EnumMatchBool}, ConverterParameter=Euclidean}"/>
+                                </WrapPanel>
+
+                                <Separator Margin="0,4,0,12"/>
+
+                                <!-- VIDEO BATTLEMAP AUDIO & PLAYBACK -->
+                                <StackPanel Visibility="{Binding StagedScene.MediaType, Converter={StaticResource EnumMatchVis}, ConverterParameter=VideoMap}">
+                                    <TextBlock Text="VIDEO BATTLEMAP PLAYBACK" FontSize="11" FontWeight="Bold" Foreground="#2ED573" Margin="0,0,0,8"/>
+                                    <Button Content="⏯ Play / Pause Looping Video" Margin="0,0,0,8" Click="ToggleVideoPlayPause_Click"/>
+                                    <CheckBox Content="Mute Video Audio" IsChecked="{Binding StagedScene.Model.IsVideoMuted}" Click="VideoAudioChanged_Click" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Video Volume:" Foreground="{StaticResource TextMutedBrush}" FontSize="12" Margin="0,0,0,4"/>
+                                    <Slider Minimum="0" Maximum="1" Value="{Binding StagedScene.Model.VideoVolume}" ValueChanged="VideoVolumeSlider_Changed"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ==================== TAB 4: TV & 1" PHYSICAL MINI SCALE ==================== -->
+                    <TabItem Header="TV &amp; 1&quot;">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="TV CAMERA SYNCHRONIZATION" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,8"/>
+
+                                <RadioButton Style="{StaticResource PillRadio}" GroupName="TabTvSync" Margin="0,0,0,6"
+                                             Content="📐 Lock TV to 1-Inch Physical Mini Scale"
+                                             IsChecked="{Binding TvProfile.SyncMode, Converter={StaticResource EnumMatchBool}, ConverterParameter=PhysicalOneInch}"/>
+                                <RadioButton Style="{StaticResource PillRadio}" GroupName="TabTvSync" Margin="0,0,0,6"
+                                             Content="🔗 Mirror DM Pan &amp; Zoom"
+                                             IsChecked="{Binding TvProfile.SyncMode, Converter={StaticResource EnumMatchBool}, ConverterParameter=MirrorDm}"/>
+                                <RadioButton Style="{StaticResource PillRadio}" GroupName="TabTvSync" Margin="0,0,0,12"
+                                             Content="🔓 Independent TV Camera (Drag TV Pill)"
+                                             IsChecked="{Binding TvProfile.SyncMode, Converter={StaticResource EnumMatchBool}, ConverterParameter=IndependentTv}"/>
+
+                                <TextBlock Text="TV ROTATION (LANDSCAPE / VERTICAL)" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,6"/>
+                                <UniformGrid Columns="4" Margin="0,0,0,14">
+                                    <Button Content="0°" Margin="0,0,4,0" Tag="0" Click="SetTvRotation_Click"/>
+                                    <Button Content="90°" Margin="0,0,4,0" Tag="90" Click="SetTvRotation_Click"/>
+                                    <Button Content="180°" Margin="0,0,4,0" Tag="180" Click="SetTvRotation_Click"/>
+                                    <Button Content="270°" Tag="270" Click="SetTvRotation_Click"/>
+                                </UniformGrid>
+
+                                <Separator Margin="0,0,0,12"/>
+
+                                <TextBlock Text="1-INCH PHYSICAL MINIATURE CALIBRATION" FontSize="11" FontWeight="Bold" Foreground="#2ED573" Margin="0,0,0,6"/>
+                                <TextBlock Text="Enter your TV's diagonal size OR use the live On-TV 1-Inch Ruler with a real miniature base:"
+                                           TextWrapping="Wrap" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,8"/>
+
+                                <DockPanel Margin="0,0,0,6">
+                                    <TextBlock Text="TV Diagonal (inches):" VerticalAlignment="Center" Foreground="{StaticResource TextMutedBrush}"/>
+                                    <TextBox DockPanel.Dock="Right" Width="70" Text="{Binding TvProfile.DiagonalInches, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+
+                                <UniformGrid Columns="5" Margin="0,0,0,8">
+                                    <Button Content="32&quot;" FontSize="11" Padding="2,4" Margin="0,0,3,0" Tag="32" Click="SetTvDiagonalPreset_Click"/>
+                                    <Button Content="43&quot;" FontSize="11" Padding="2,4" Margin="0,0,3,0" Tag="43" Click="SetTvDiagonalPreset_Click"/>
+                                    <Button Content="50&quot;" FontSize="11" Padding="2,4" Margin="0,0,3,0" Tag="50" Click="SetTvDiagonalPreset_Click"/>
+                                    <Button Content="55&quot;" FontSize="11" Padding="2,4" Margin="0,0,3,0" Tag="55" Click="SetTvDiagonalPreset_Click"/>
+                                    <Button Content="65&quot;" FontSize="11" Padding="2,4" Tag="65" Click="SetTvDiagonalPreset_Click"/>
+                                </UniformGrid>
+
+                                <Border Background="{StaticResource BgCardBrush}" CornerRadius="6" Padding="8" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding ComputedPhysicalPpiDisplay}" FontWeight="Bold" Foreground="#2ED573" Margin="0,0,0,6"/>
+                                        <CheckBox Content="Show Live 1-Inch Calibration Shapes on TV" IsChecked="{Binding IsTvCalibrationRulerVisible}"/>
+                                        <StackPanel Visibility="{Binding IsTvCalibrationRulerVisible, Converter={StaticResource BoolToVis}}" Margin="0,6,0,0">
+                                            <Slider Minimum="30" Maximum="260" Value="{Binding CalibrationRulerDips}" Margin="0,0,0,6"/>
+                                            <UniformGrid Columns="2">
+                                                <Button Content="✓ Lock 1&quot; Scale" Background="#1E4638" Margin="0,0,3,0" Click="ApplyRulerCalibration_Click"/>
+                                                <Button Content="Use Diagonal" Margin="3,0,0,0" Click="ResetDiagonalCalibration_Click"/>
+                                            </UniformGrid>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+
+                                <Separator Margin="0,0,0,12"/>
+
+                                <TextBlock Text="STANDBY / BLACKOUT SPLASH ART" FontSize="11" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,6"/>
+                                <TextBlock Text="Optional campaign artwork displayed when 'Blackout' is active:"
+                                           TextWrapping="Wrap" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,8"/>
+                                <UniformGrid Columns="2" Margin="0,0,0,8">
+                                    <Button Content="Choose Splash Art..." Margin="0,0,3,0" Click="ChooseStandbyImage_Click"/>
+                                    <Button Content="Solid Black Only" Margin="3,0,0,0" Click="ClearStandbyImage_Click"/>
+                                </UniformGrid>
+                                <TextBlock Text="Optional Banner Title:" FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding TvProfile.StandbyTitle, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </Grid>
+
+        <!-- ==================== ROW 3: BOTTOM STATUS & CHEAT-SHEET BAR ==================== -->
+        <Border Grid.Row="3" Background="#10131C" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,1,0,0" Padding="12,0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Mid-Drag: Pan  •  Wheel: Zoom  •  C: Center TV  •  Alt+Click: Ping  •  F12: TV On/Off  •  B: Blackout  •  Tab: Focus  •  "
+                               FontSize="11" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                    <Button Style="{StaticResource GhostIconButton}" Content="F1: Shortcuts" Padding="5,1" Foreground="#00D2FF" FontWeight="SemiBold" Click="OpenShortcuts_Click"/>
+                </StackPanel>
+                <TextBlock Text="{Binding StatusMessage}" FontSize="11.5" Foreground="#CBD5E1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

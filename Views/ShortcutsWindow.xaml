@@ -1,0 +1,207 @@
+<Window x:Class="DiceChaosDisplay.Views.ShortcutsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DiceChaos DM Studio — Keyboard &amp; Mouse Cheat-Sheet"
+        Icon="pack://application:,,,/DiceChaosDisplay;component/Assets/AppIcon.ico"
+        Width="740" Height="560"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{StaticResource BgPanelBrush}"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Window.Resources>
+        <Style x:Key="KeyBadge" TargetType="Border">
+            <Setter Property="Background" Value="#252E45"/>
+            <Setter Property="BorderBrush" Value="#43527A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="7,2"/>
+            <Setter Property="Margin" Value="0,2,8,2"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="KeyText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#00D2FF"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="11.5"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <DockPanel Grid.Row="0" Margin="0,0,0,14">
+            <Image DockPanel.Dock="Left"
+                   Source="pack://application:,,,/DiceChaosDisplay;component/Assets/AppIcon-256.png"
+                   Width="38" Height="38"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   Margin="0,0,12,0" VerticalAlignment="Center"/>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="KEYBOARD &amp; MOUSE SHORTCUTS" FontSize="16" FontWeight="Black" Foreground="#00D2FF"/>
+                <TextBlock Text="Designed for zero-friction table control while running physical miniatures on your TV."
+                           FontSize="12" Foreground="{StaticResource TextMutedBrush}" Margin="0,2,0,0"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Two-Column Cheat Sheet -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="18"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Column: Navigation & Fog -->
+                <StackPanel Grid.Column="0">
+                    <Border Background="{StaticResource BgCardBrush}" CornerRadius="7" Padding="12" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="CAMERA &amp; TV NAVIGATION" FontSize="11.5" FontWeight="Bold" Foreground="#2ED573" Margin="0,0,0,8"/>
+
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Middle-Drag"/></Border>
+                                <TextBlock Text="Pan DM map from any tool" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Space + Drag"/></Border>
+                                <TextBlock Text="Pan DM map with left mouse" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Mouse Wheel"/></Border>
+                                <TextBlock Text="Smooth cursor-centered zoom" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="C"/></Border>
+                                <TextBlock Text="Center TV View at mouse cursor" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Ctrl+Mid-Drag"/></Border>
+                                <TextBlock Text="Pan TV View directly from any tool" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Drag 'TV VIEW'"/></Border>
+                                <TextBlock Text="Grab top TV pill badge from any tool" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="F / Ctrl+0"/></Border>
+                                <TextBlock Text="Fit map to view / 100% 1:1 zoom" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Tab / F11"/></Border>
+                                <TextBlock Text="Focus Mode (hide sidebars) / Fullscreen" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="{StaticResource BgCardBrush}" CornerRadius="7" Padding="12">
+                        <StackPanel>
+                            <TextBlock Text="FOG OF WAR &amp; ROOMS" FontSize="11.5" FontWeight="Bold" Foreground="#00D2FF" Margin="0,0,0,8"/>
+
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="2 / 3 / 4 / 5"/></Border>
+                                <TextBlock Text="Fog Brush / Box / Polygon / Prep Room" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Right-Drag"/></Border>
+                                <TextBlock Text="Paint inverse fog (Hide while Revealing)" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="[  and  ]"/></Border>
+                                <TextBlock Text="Decrease / Increase fog brush size" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Shift + Wheel"/></Border>
+                                <TextBlock Text="Resize fog brush (or rotate AoE)" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Enter / DblClick"/></Border>
+                                <TextBlock Text="Complete Fog Polygon or Room Mask" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Right Column: Tactical & TV Broadcast -->
+                <StackPanel Grid.Column="2">
+                    <Border Background="{StaticResource BgCardBrush}" CornerRadius="7" Padding="12" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="TACTICAL TOOLS &amp; EDITING" FontSize="11.5" FontWeight="Bold" Foreground="#FFD166" Margin="0,0,0,8"/>
+
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="1"/></Border>
+                                <TextBlock Text="Select / Move / Drag TV Frame" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="6 / 7 / 8 / 9"/></Border>
+                                <TextBlock Text="3×3 Grid / Pencil / Ping / 5e Ruler" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="A / T / N"/></Border>
+                                <TextBlock Text="Spell AoE / Mini Glow Ring / Secret Pin" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Alt + Click"/></Border>
+                                <TextBlock Text="Sonar Ping on TV &amp; DM from ANY tool" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Right-Click"/></Border>
+                                <TextBlock Text="Context menu on Ring, AoE, Pin, or Map" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Del / Esc"/></Border>
+                                <TextBlock Text="Delete selected item / Deselect or cancel" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Ctrl+Z / Ctrl+Y"/></Border>
+                                <TextBlock Text="Unified Undo / Redo (Fog, AoEs, Rings)" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="{StaticResource BgCardBrush}" CornerRadius="7" Padding="12">
+                        <StackPanel>
+                            <TextBlock Text="TV BROADCAST &amp; CAMPAIGN" FontSize="11.5" FontWeight="Bold" Foreground="#FF6B35" Margin="0,0,0,8"/>
+
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="F12"/></Border>
+                                <TextBlock Text="Toggle Player TV Screen ON / OFF" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Esc (on TV)"/></Border>
+                                <TextBlock Text="Close Player TV Window &amp; focus DM" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="B"/></Border>
+                                <TextBlock Text="Toggle TV Blackout / Splash Art" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Ctrl + Enter"/></Border>
+                                <TextBlock Text="Push Staged DM Scene to Live TV" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Ctrl+S / Shift+S"/></Border>
+                                <TextBlock Text="Save Campaign / Save Campaign As" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <Border Style="{StaticResource KeyBadge}"><TextBlock Style="{StaticResource KeyText}" Text="Ctrl+I / Ctrl+O"/></Border>
+                                <TextBlock Text="Add Map / Open .dicechaos Campaign" VerticalAlignment="Center" FontSize="12"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <DockPanel Grid.Row="2" Margin="0,14,0,0">
+            <TextBlock Text="Tip: Drop 4K/8K PNG, JPG, WEBP, .dd2vtt/.uvtt, MP4/WEBM, or .dicechaos files anywhere onto the window!"
+                       FontSize="11.5" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" Content="Got It (Esc)" Padding="16,6" Background="{StaticResource AccentPurpleBrush}" BorderBrush="#9184F5" Click="Close_Click"/>
+        </DockPanel>
+    </Grid>
+</Window>
