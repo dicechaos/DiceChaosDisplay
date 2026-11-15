@@ -9,7 +9,8 @@
 - **Short Website Summary:**
   - **DiceChaosDisplay** is a native, offline-first Windows desktop application designed for Dungeon Masters and Game Masters who run in-person tabletop RPGs on a flat-screen TV, digital gaming table, or projector. It pairs a private **DM Studio** control screen with a borderless **Player TV Display**, delivering smooth 60 FPS 4K/8K static and animated battlemaps, instant feathered Fog of War, 1-click room reveals, true 1-inch physical miniature scaling, and glowing under-miniature condition and spell overlays—with no subscriptions, no accounts, and no web-browser stutter.
 - **Core Design Philosophy:**
-  - **Hybrid Tabletop First (Not a Bloated Online VTT):** Built around real dice and physical miniatures sitting on TV glass—enhancing at-the-table play instead of forcing players onto laptops or character-sheet servers.
+  - **Built by Dice Chaos ([dicechaos.com](https://dicechaos.com)) for Real Dice & Physical Minis:** Crafted around real handcrafted polyhedral dice and physical miniatures sitting on TV glass—enhancing in-person tabletop play instead of forcing players into browser tabs or monthly VTT subscriptions.
+  - **Paired Companion to [Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections):** Together, *Dice Chaos Connections* (offline campaign mind-map, faction/conspiracy board, and 2nd-screen lore display) and *Dice Chaos Display* (60 FPS 4K/8K battlemaps, Fog of War, and true 1-inch mini calibration) form a unified, zero-spoiler 2nd-screen Tabletop DM Suite—you can even load High-DPI Map Posters exported from *Connections* straight into *Display*!
   - **100% Local, Offline & Private:** Runs natively on your machine with local files (`.dicechaos` campaigns, images, `.uvtt` bundles, and videos). Zero cloud lock-in, zero internet requirement on game night, and zero recurring fees.
 
 ---

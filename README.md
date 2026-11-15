@@ -1,84 +1,111 @@
 <p align="center">
-  <img src="Assets/AppIcon-256.png" width="144" height="144" alt="DiceChaosDisplay Icon" />
+  <img src="Assets/AppIcon-256.png" width="96" height="96" alt="Dice Chaos Display D20 Tabletop Emblem" />
 </p>
 
-<h1 align="center">DiceChaosDisplay</h1>
+<h1 align="center">Dice Chaos Display</h1>
 
 <p align="center">
-  <strong>A native Windows DM Studio paired with a borderless Player TV Display—engineered specifically for playing D&amp;D and TTRPGs with real physical miniatures and real dice sitting on TV glass at locked 60 FPS.</strong>
+  <strong>Offline 4K/8K Battlemap Studio, True 1-Inch Physical Miniature Calibration &amp; Zero-Spoiler 2nd-Screen Tabletop TV Display</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/dicechaos/DiceChaosDisplay/releases/latest"><strong>⬇ Download Latest Release (Windows x64)</strong></a>
-  &nbsp;•&nbsp;
-  <a href="FEATURES.md"><strong>Full Feature Reference</strong></a>
-  &nbsp;•&nbsp;
-  <a href="https://dicechaos.com"><strong>dicechaos.com</strong></a>
+  <a href="https://github.com/dicechaos/DiceChaosDisplay/releases"><img src="https://img.shields.io/github/v/release/dicechaos/DiceChaosDisplay?include_prereleases&style=flat-square&label=download" alt="Latest Release" /></a>
+  <a href="https://github.com/dicechaos/DiceChaosDisplay/actions"><img src="https://img.shields.io/github/actions/workflow/status/dicechaos/DiceChaosDisplay/ci.yml?branch=main&style=flat-square&label=build" alt="Build Status" /></a>
+  <a href="https://dicechaos.com"><img src="https://img.shields.io/badge/website-dicechaos.com-4f46e5?style=flat-square" alt="dicechaos.com" /></a>
+  <a href="https://github.com/dicechaos/DiceChaosConnections"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Connections-0ea5e9?style=flat-square" alt="Dice Chaos Connections" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/dicechaos/DiceChaosDisplay?style=flat-square" alt="MIT License" /></a>
 </p>
 
 ---
 
-## Why DiceChaosDisplay?
+**Dice Chaos Display** is a local-first Windows desktop studio built by **[Dice Chaos](https://dicechaos.com)** for Dungeon Masters, Game Masters, and in-person tabletop groups who love rolling real handcrafted polyhedral dice and moving real physical miniatures around the table. Pair a private **DM Studio** screen with a borderless **Player TV Display** to run 4K/8K battlemaps, looping video scenes, sub-millisecond feathered Fog of War, 1-click dungeon room reveals, and exact **1.00-inch (`25.4 mm`) physical miniature scaling** at locked 60 FPS—with zero browser lag, zero accounts, and zero subscriptions.
 
-Most virtual tabletops assume every player is staring at a laptop browser. **DiceChaosDisplay** is built from the ground up for **in-person tabletop play** on a flat-screen TV, custom gaming table, or projector:
-
-- **100% Native, Offline & Zero-Subscription:** Local `.dicechaos` campaign files, images, `.uvtt` bundles, and animated videos—no browser stutter, no cloud accounts, and no internet needed on game night.
-- **True 1-Inch Physical Miniature Scale:** Per-Monitor V2 High-DPI math ensures 1 tactical square equals **1.00 real physical inch (`25.4 mm`)** on the TV glass—calibrated via TV diagonal presets (`32"`–`65"`) or a live **On-TV 1-Inch Physical Ruler**.
-- **Zero-Lag 4K / 8K & Video Battlemaps:** Asynchronous `2048×2048` frustum-culled GPU tiles + airspace-free looping `MP4` / `WEBM` video battlemaps rendered smoothly *underneath* grids, rings, AoEs, and Fog of War.
-- **Universal VTT One-Step Import (`.dd2vtt` / `.uvtt` / `.df2vtt`):** Imports maps from Dungeondraft, Dungeon Alchemist, and Arkenforge with automatic grid calibration and optional DM-only wall/door guides.
-- **Sub-Millisecond Feathered Fog of War & 1-Click Rooms:** Freehand Fog Brush, Box, and Polygon tools with soft feathered edges, plus pre-pped **1-Click Dungeon Room** badges (`LOCKED` / `OPEN`) for instant room reveals.
-- **Under-Mini Glowing Rings & 5e Spell AoEs:** Clean glow-only condition/aura rings (`Concentrating`, `Bloodied`, `Blessed`, `Hexed`, `Poisoned`, `10ft`/`15ft`/`30ft` auras) designed to shine beneath real physical miniatures, alongside rotatable `Sphere`, `5e Cone`, `Cube`, and `Line` spell templates, a `5-5-5` / `5-10-5` / `Euclidean` ruler, `Alt+Click` sonar pings, secret DM-only pins, and a pre-staged **TV Handout Presenter**.
-- **Smart Dual-Screen & Single-Monitor Prep:** Toggle the Player TV screen **ON / OFF** anytime (`F12`), stage maps privately before pushing (`Ctrl+Enter`), engage spoiler-safe **Blackout** (`B`), and prep safely on a single laptop screen via automatic **16:9 Floating Preview Mode**.
-
-👉 See **[FEATURES.md](FEATURES.md)** for the complete breakdown of every tool and capability.
+> **Part of the Dice Chaos Tabletop Suite:** Built side-by-side with **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)**—our offline TTRPG campaign mind-map, faction & conspiracy board, and 2nd-screen lore display. Plan your world, NPCs, and plot webs in *Connections*, export High-DPI posters or switch screens on game night, and run tactical encounters right under your miniatures and **[Dice Chaos](https://dicechaos.com)** dice in *Display*. Found a bug or have a feature request? [Open an issue on GitHub](https://github.com/dicechaos/DiceChaosDisplay/issues).
 
 ---
 
-## Quick Download & First Run (Windows 10 / 11 x64)
+## Download & Install
 
-1. Download **`DiceChaosDisplay-v1.0.0-win-x64.zip`** from the **[Releases](https://github.com/dicechaos/DiceChaosDisplay/releases)** page.
-2. Right-click the `.zip` → **Extract All...** into any folder.
-3. Run **`DiceChaosDisplay.exe`** (self-contained—no `.NET` runtime installation required!).
-   > **Note on Windows SmartScreen:** Because this is an independent open-source desktop executable, Windows may show *"Windows protected your PC"* the very first time you launch it. Click **More info** → **Run anyway**.
+1. Grab the latest self-contained portable archive (`DiceChaosDisplay-v1.0.0-win-x64.zip`) from **[GitHub Releases](https://github.com/dicechaos/DiceChaosDisplay/releases/latest)**.
+2. Extract the `.zip` into any folder and launch **`DiceChaosDisplay.exe`**—the `.NET 10` runtime and `LibVLC` video codecs are bundled inside, so no extra installations are required.
+
+> **Windows SmartScreen Note:** Because builds are not yet signed with a commercial EV certificate, Windows may display *"Windows protected your PC"* on first launch. Click **More info** -> **Run anyway**.
 
 ---
 
-## Essential Table Hotkeys (`F1` in-app opens the full Cheat-Sheet)
+## Key Features
 
-| Shortcut | Action |
+### Zero-Spoiler Dual-Screen DM Studio & Smart TV Toggle
+- **Private Stage-and-Push Workflow (`Ctrl+Enter`):** Load maps, paint Fog of War, align grids, and drop secret trap notes privately on your DM screen (`Staged on DM Only`) before broadcasting to the table—or toggle **Auto-Push** for instant 1-click scene switching.
+- **1-Click Player TV Power Toggle (`F12`):** Turn the borderless Player TV window **ON** or **OFF** anytime via the header status pill (`TV Off` ⇄ `● TV Live` / `● TV Preview`), **`F12`**, or **`Esc`** on the TV—without stealing keyboard focus from your DM Studio.
+- **Smart Single-Monitor Prep Mode:** Automatically detects when you are prepping on a single laptop/desktop monitor and opens a resizable **16:9 Floating Preview Window** instead of trapping your screen behind a fullscreen overlay, then upgrades seamlessly when you plug in an HDMI TV.
+- **Spoiler-Safe Blackout & Custom Splash Art (`B`):** Instant pure pitch-black TV blackout (or custom campaign standby artwork + title banner), with automatic blackout protection if the TV is turned on before a map is pushed.
+
+### True 1-Inch Physical Miniature Calibration
+- **Per-Monitor V2 High-DPI Precision:** Accounts for native panel resolution and Windows DPI scaling (`100%`–`200%+`) so 1 tactical map square equals **1.00 real physical inch (`25.4 mm`)** on the TV glass underneath real miniature bases.
+- **Diagonal Presets + Live On-TV Physical Ruler:** Tap your TV's diagonal size (`32"`, `43"`, `50"`, `55"`, `65"`, or custom inches) **or** project live 1-inch calibration shapes onto the glass, set a real miniature base on the screen, and lock exact hardware PPI in seconds.
+- **Tabletop Orientation & Effortless Framing:** Rotate the Player TV output `0° / 90° / 180° / 270°` for flat-mounted table TVs, and drag the **`✥ TV VIEW`** canvas pill (or press **`C`**) to pan the TV camera from *any* active tool.
+
+### 60 FPS 4K / 8K Battlemap, Video & Universal VTT Engine
+- **Tiled 4K / 8K GPU Pyramid:** Asynchronous background decoding into frozen `2048×2048` frustum-culled GPU tiles keeps pan and zoom silky-smooth on massive 8K battlemaps—even High-DPI Map Posters exported from **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)**.
+- **Looping Video Battlemaps (`MP4` / `WEBM` / `MKV`):** Airspace-free animated battlemaps render *underneath* tactical grids, glowing miniature rings, spell AoE templates, and Fog of War, complete with Play/Pause, Mute, and Volume controls.
+- **1-Step Universal VTT Import (`.dd2vtt` / `.uvtt` / `.df2vtt`):** Directly imports maps from Dungeondraft, Dungeon Alchemist, and Arkenforge with automatic `PixelsPerCell` grid alignment and optional DM-only cyan wall & amber door guides.
+
+### Sub-Millisecond Feathered Fog of War & 1-Click Dungeon Rooms
+- **Zero-Copy SkiaSharp Fog Engine:** ~1 ms feathered `Reveal` and `Hide` strokes with **Fog Brush** (`2`), **Fog Box** (`3`), and **Fog Polygon** (`4`), plus instant `Right-Drag` inverse painting and adjustable DM fog translucency (`100%` solid black on the Player TV).
+- **Pre-Pped 1-Click Fog Rooms (`5`):** Outline and name dungeon chambers ahead of session night, then click floating **`LOCKED` / `OPEN`** room badges on the DM canvas to reveal or re-fog entire rooms in a single click.
+
+### Under-Miniature Glow Rings, 5e Spell AoEs & Table Handouts
+- **Under-Mini Condition & Aura Rings (`T`):** Clean glow-only neon rings built to shine beneath real physical minis, with 1-click 5e presets (*Concentrating*, *Bloodied*, *Blessed*, *Hexed*, *Poisoned*, *Prone*, *10ft / 15ft / 30ft Auras*), creature footprints (`1×1` Medium through `4×4` Gargantuan), and auto-numbered digital monster tokens.
+- **Rotatable 5e Spell AoEs (`A`) & Distance Ruler (`9`):** Drop `Sphere`, `5e Cone`, `Cube`, and `Line` templates (`Shift+Wheel` to rotate, clutter-free hover labels) and measure distances with `5-5-5`, `5-10-5`, or `Euclidean` diagonal rules across Square and Hex grids (aligned in seconds via the **3×3 Visual Grid Matcher**).
+- **Sonar Pings, Secret DM Pins & Handout Gallery:** `Alt+Click` from any tool to ping both screens, drop **`🔒 Secret DM Note Pins`** (`NEVER ON TV`), and project pre-staged NPC, monster, or item artwork onto the rotated Player TV in one click.
+
+👉 See **[FEATURES.md](./FEATURES.md)** for the exhaustive capability reference.
+
+---
+
+## Quick Shortcuts
+
+| Shortcut / Gesture | Action |
 | :--- | :--- |
 | **`F12`** (or **`Esc`** on TV) | Toggle Player TV Screen **ON / OFF** |
-| **`Ctrl + Enter`** | Push privately staged DM scene to Live TV |
+| **`Ctrl+Enter`** | Push privately staged DM scene to Live TV |
 | **`B`** | Toggle TV Blackout / Campaign Standby Splash |
-| **`Middle-Drag`** or **`Space + Drag`** | Pan DM canvas from any tool (`Mouse Wheel` to zoom) |
-| **`C`** / **Drag `✥ TV VIEW`** | Center or drag the TV viewport directly from any tool |
-| **`2` / `3` / `4` / `5`** | Fog Brush / Fog Box / Fog Polygon / 1-Click Room Prep (`[` & `]` brush size, `Right-Drag` inverse fog) |
-| **`6` / `7` / `8` / `9`** | 3×3 Visual Grid Matcher / Pencil / Ping / 5e Distance Ruler |
-| **`A` / `T` / `N`** | 5e Spell AoE / Under-Mini Glow Ring / Secret DM Note Pin |
-| **`Alt + Click`** | Sonar Ping on both DM & Player TV from any active tool |
-| **`Ctrl + Z` / `Ctrl + Y`** | Unified Undo / Redo across Fog, Rooms, AoEs, Rings, Sketches, & Pins |
-| **`Tab` / `F11`** | Focus Mode (collapse sidebars) / Fullscreen DM Studio |
+| **`Middle-Drag` / `Space+Drag`** | Pan DM map from any tool (`Mouse Wheel` to zoom) |
+| **`C` · Drag `✥ TV VIEW` Pill** | Center TV at cursor · Drag TV camera directly from any tool |
+| **`2` / `3` / `4` / `5`** | Fog Brush / Fog Box / Fog Polygon / 1-Click Room Prep |
+| **`[` / `]` · `Shift+Wheel`** | Decrease / Increase Fog Brush radius (or rotate selected AoE) |
+| **`Right-Drag` (in Fog Tools)** | Paint inverse fog on the fly (Hide while Revealing) |
+| **`6` / `7` / `8` / `9`** | 3×3 Grid Matcher / Pencil / Sonar Ping / 5e Distance Ruler |
+| **`A` / `T` / `N`** | 5e Spell AoE / Under-Mini Glow Ring / Secret DM Pin |
+| **`Alt+Click`** | Trigger animated Sonar Ping on DM & TV from any tool |
+| **`Ctrl+S` / `Ctrl+Shift+S`** | Save `.dicechaos` campaign / Save Campaign As… |
+| **`Ctrl+Z` / `Ctrl+Y`** | Unified Undo / Redo (Fog, Rooms, AoEs, Rings, Sketches, Pins) |
+| **`Tab` / `F11` / `F1`** | Focus Mode (hide sidebars) / Fullscreen DM Studio / Cheat-Sheet |
 
 ---
 
-## Building & Testing from Source
+## Development & Building From Source
 
-Requires the **[.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)** on Windows (`x64`):
+Requires the **[.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)** on Windows (`x64`).
 
 ```powershell
-# Run the automated unit & 8K stress test suite
+# Run automated unit & 8K stress tests
 dotnet test Tests\DiceChaosDisplay.Tests.csproj
 
-# Build & run Debug or Release
+# Launch Release DM Studio locally
 dotnet run --project DiceChaosDisplay.csproj -c Release
 
-# Publish a self-contained portable Windows x64 folder
+# Package self-contained Windows x64 release folder
 dotnet publish DiceChaosDisplay.csproj -c Release -r win-x64 --self-contained true -o publish\DiceChaosDisplay-win-x64
 ```
 
 ---
 
-## Third-Party Notices & License
+## Links & Feedback
 
-- **DiceChaosDisplay** is released under the **[MIT License](LICENSE)** — Copyright © 2026 **Gus / DiceChaos** ([dicechaos.com](https://dicechaos.com)).
-- Uses **[SkiaSharp](https://github.com/mono/SkiaSharp)** (MIT License) for high-speed 2D alpha compositing and **[LibVLCSharp](https://code.videolan.org/videolan/LibVLCSharp) / [VideoLAN LibVLC](https://www.videolan.org/vlc/libvlc.html)** (LGPL-2.1, dynamically linked in `libvlc/`) for animated video battlemap decoding.
+- **Handmade Dice & Tabletop Gear:** [dicechaos.com](https://dicechaos.com)
+- **Companion Campaign & Conspiracy Studio:** [Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)
+- **Bug Reports & Feature Requests:** [GitHub Issues](https://github.com/dicechaos/DiceChaosDisplay/issues)
+- **Third-Party Notices:** Uses [SkiaSharp](https://github.com/mono/SkiaSharp) (MIT) and [LibVLCSharp / VideoLAN LibVLC](https://www.videolan.org/vlc/libvlc.html) (LGPL-2.1, dynamically linked in `libvlc/`).
+- **License:** MIT License — Copyright © 2026 dicechaos (Gus). See [LICENSE](./LICENSE).
