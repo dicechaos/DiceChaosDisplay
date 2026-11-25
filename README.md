@@ -15,12 +15,12 @@
   <a href="https://github.com/dicechaos/DiceChaosMaps"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Maps-f59e0b?style=flat-square" alt="Dice Chaos Maps" /></a>
   <a href="https://github.com/dicechaos/DiceChaosConnections"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Connections-0ea5e9?style=flat-square" alt="Dice Chaos Connections" /></a>
   <a href="https://github.com/dicechaos/DiceChaosMasters"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Masters-8b5cf6?style=flat-square" alt="Dice Chaos Masters" /></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/github/license/dicechaos/DiceChaosDisplay?style=flat-square" alt="MIT License" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/dicechaos/DiceChaosDisplay?style=flat-square" alt="GPL-3.0 License" /></a>
 </p>
 
 ---
 
-**Dice Chaos Display** is a local-first Windows desktop studio built by **[Dice Chaos](https://dicechaos.com)** for Dungeon Masters, Game Masters, and in-person tabletop groups who love rolling real handcrafted polyhedral dice and moving real physical miniatures around the table. Pair a private **DM Studio** screen with a borderless **Player TV Display** to run 4K/8K battlemaps, looping video scenes, sub-millisecond feathered Fog of War, 1-click dungeon room reveals, and exact **1.00-inch (`25.4 mm`) physical miniature scaling** at locked 60 FPS—with zero browser lag, zero accounts, and zero subscriptions.
+**Dice Chaos Display** is a free, open-source (**GPL-3.0**), local-first Windows desktop studio built by **[Dice Chaos](https://dicechaos.com)** for Dungeon Masters, Game Masters, and in-person tabletop groups who love rolling real handcrafted polyhedral dice and moving real physical miniatures around the table. Pair a private **DM Studio** screen with a borderless **Player TV Display** to run 4K/8K battlemaps, looping video scenes, sub-millisecond feathered Fog of War, 1-click dungeon room reveals, and exact **1.00-inch (`25.4 mm`) physical miniature scaling** at locked 60 FPS—with zero browser lag, zero accounts, and zero subscriptions.
 
 > **Part of the Dice Chaos Tabletop Suite:** Built side-by-side with **[Dice Chaos Maps](https://github.com/dicechaos/DiceChaosMaps)** (free, open-source offline TTRPG battlemap & world atlas cartography studio with true 1-inch tabletop TV & `.dd2vtt` export), **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)** (offline TTRPG campaign mind-map, conspiracy board & zero-spoiler 2nd-screen lore display), and **[Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)** (free offline parametric 3D polyhedral dice master, matched insert blank & MSLA resin support studio). Forge custom dice masters in *Masters*, organize your NPCs and plot webs in *Connections*, paint multi-story dungeons & world atlases in *Maps*, and run them under physical miniatures and real handmade resin dice on your table TV in *Display*—or equip your party at **[dicechaos.com](https://dicechaos.com)**. Found a bug or have a feature request? [Open an issue on GitHub](https://github.com/dicechaos/DiceChaosDisplay/issues).
 
@@ -112,4 +112,4 @@ dotnet publish DiceChaosDisplay.csproj -c Release -r win-x64 --self-contained tr
 - **Companion 3D Dice Master & MSLA CAD Studio:** [Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)
 - **Bug Reports & Feature Requests:** [GitHub Issues](https://github.com/dicechaos/DiceChaosDisplay/issues)
 - **Third-Party Notices:** Uses [SkiaSharp](https://github.com/mono/SkiaSharp) (MIT) and [LibVLCSharp / VideoLAN LibVLC](https://www.videolan.org/vlc/libvlc.html) (LGPL-2.1, dynamically linked in `libvlc/`).
-- **License:** MIT License — Copyright © 2026 dicechaos (Gus). See [LICENSE](./LICENSE).
+- **License:** Source code is licensed under **GNU General Public License v3.0 (GPL-3.0)** — Copyright © 2026 dicechaos (Gus); see [LICENSE](./LICENSE). Campaigns (`.dicechaos`), fog states, and table setups you create with Dice Chaos Display belong **100% to you**.

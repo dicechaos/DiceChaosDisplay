@@ -20,6 +20,7 @@
     <Description>A native Windows DM Studio paired with a borderless Player TV Display for playing D&amp;D and TTRPGs with real physical miniatures at locked 60 FPS.</Description>
     <PackageProjectUrl>https://dicechaos.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dicechaos/DiceChaosDisplay</RepositoryUrl>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
