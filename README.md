@@ -12,6 +12,7 @@
   <a href="https://github.com/dicechaos/DiceChaosDisplay/releases"><img src="https://img.shields.io/github/v/release/dicechaos/DiceChaosDisplay?include_prereleases&style=flat-square&label=download" alt="Latest Release" /></a>
   <a href="https://github.com/dicechaos/DiceChaosDisplay/actions"><img src="https://img.shields.io/github/actions/workflow/status/dicechaos/DiceChaosDisplay/ci.yml?branch=main&style=flat-square&label=build" alt="Build Status" /></a>
   <a href="https://dicechaos.com"><img src="https://img.shields.io/badge/website-dicechaos.com-4f46e5?style=flat-square" alt="dicechaos.com" /></a>
+  <a href="https://github.com/dicechaos/DiceChaosMaps"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Maps-f59e0b?style=flat-square" alt="Dice Chaos Maps" /></a>
   <a href="https://github.com/dicechaos/DiceChaosConnections"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Connections-0ea5e9?style=flat-square" alt="Dice Chaos Connections" /></a>
   <a href="https://github.com/dicechaos/DiceChaosMasters"><img src="https://img.shields.io/badge/companion%20app-Dice%20Chaos%20Masters-8b5cf6?style=flat-square" alt="Dice Chaos Masters" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/dicechaos/DiceChaosDisplay?style=flat-square" alt="MIT License" /></a>
@@ -21,7 +22,7 @@
 
 **Dice Chaos Display** is a local-first Windows desktop studio built by **[Dice Chaos](https://dicechaos.com)** for Dungeon Masters, Game Masters, and in-person tabletop groups who love rolling real handcrafted polyhedral dice and moving real physical miniatures around the table. Pair a private **DM Studio** screen with a borderless **Player TV Display** to run 4K/8K battlemaps, looping video scenes, sub-millisecond feathered Fog of War, 1-click dungeon room reveals, and exact **1.00-inch (`25.4 mm`) physical miniature scaling** at locked 60 FPS—with zero browser lag, zero accounts, and zero subscriptions.
 
-> **Part of the Dice Chaos Tabletop Suite:** Built side-by-side with **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)** (offline TTRPG campaign mind-map, conspiracy board & zero-spoiler 2nd-screen lore display) and **[Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)** (free offline parametric 3D polyhedral dice master, matched insert blank & MSLA resin support studio). Forge your custom dice masters at **[dicechaos.com](https://dicechaos.com)** with *Masters*, map out your world, NPCs, and plot webs in *Connections* (or export High-DPI Map Posters straight into *Display*), and roll real handmade resin dice right under your miniatures in *Display*. Found a bug or have a feature request? [Open an issue on GitHub](https://github.com/dicechaos/DiceChaosDisplay/issues) or visit **[dicechaos.com](https://dicechaos.com)**.
+> **Part of the Dice Chaos Tabletop Suite:** Built side-by-side with **[Dice Chaos Maps](https://github.com/dicechaos/DiceChaosMaps)** (free, open-source offline TTRPG battlemap & world atlas cartography studio with true 1-inch tabletop TV & `.dd2vtt` export), **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)** (offline TTRPG campaign mind-map, conspiracy board & zero-spoiler 2nd-screen lore display), and **[Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)** (free offline parametric 3D polyhedral dice master, matched insert blank & MSLA resin support studio). Forge custom dice masters in *Masters*, organize your NPCs and plot webs in *Connections*, paint multi-story dungeons & world atlases in *Maps*, and run them under physical miniatures and real handmade resin dice on your table TV in *Display*—or equip your party at **[dicechaos.com](https://dicechaos.com)**. Found a bug or have a feature request? [Open an issue on GitHub](https://github.com/dicechaos/DiceChaosDisplay/issues).
 
 ---
 
@@ -50,7 +51,7 @@
 ### 60 FPS 4K / 8K Battlemap, Video & Universal VTT Engine
 - **Tiled 4K / 8K GPU Pyramid:** Asynchronous background decoding into frozen `2048×2048` frustum-culled GPU tiles keeps pan and zoom silky-smooth on massive 8K battlemaps—even High-DPI Map Posters exported from **[Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)**.
 - **Looping Video Battlemaps (`MP4` / `WEBM` / `MKV`):** Airspace-free animated battlemaps render *underneath* tactical grids, glowing miniature rings, spell AoE templates, and Fog of War, complete with Play/Pause, Mute, and Volume controls.
-- **1-Step Universal VTT Import (`.dd2vtt` / `.uvtt` / `.df2vtt`):** Directly imports maps from Dungeondraft, Dungeon Alchemist, and Arkenforge with automatic `PixelsPerCell` grid alignment and optional DM-only cyan wall & amber door guides.
+- **1-Step Universal VTT Import (`.dd2vtt` / `.uvtt` / `.df2vtt`):** Directly imports maps from **[Dice Chaos Maps](https://github.com/dicechaos/DiceChaosMaps)**, Dungeondraft, Dungeon Alchemist, and Arkenforge with automatic `PixelsPerCell` grid alignment and optional DM-only cyan wall & amber door guides.
 
 ### Sub-Millisecond Feathered Fog of War & 1-Click Dungeon Rooms
 - **Zero-Copy SkiaSharp Fog Engine:** ~1 ms feathered `Reveal` and `Hide` strokes with **Fog Brush** (`2`), **Fog Box** (`3`), and **Fog Polygon** (`4`), plus instant `Right-Drag` inverse painting and adjustable DM fog translucency (`100%` solid black on the Player TV).
@@ -106,6 +107,7 @@ dotnet publish DiceChaosDisplay.csproj -c Release -r win-x64 --self-contained tr
 ## Links & Feedback
 
 - **Handmade Dice & Tabletop Gear:** [dicechaos.com](https://dicechaos.com)
+- **Companion Battlemap & World Atlas Cartography Studio:** [Dice Chaos Maps](https://github.com/dicechaos/DiceChaosMaps)
 - **Companion Campaign & Conspiracy Studio:** [Dice Chaos Connections](https://github.com/dicechaos/DiceChaosConnections)
 - **Companion 3D Dice Master & MSLA CAD Studio:** [Dice Chaos Masters](https://github.com/dicechaos/DiceChaosMasters)
 - **Bug Reports & Feature Requests:** [GitHub Issues](https://github.com/dicechaos/DiceChaosDisplay/issues)
